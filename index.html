@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light" style="background:#FFFFFF">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="color-scheme" content="only light">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Estrutura operacional · Outubro 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FFFFFF;
+            --surface: #FFFFFF;
+            --surface-2: #F7FAF9;
+            --ink: #1D2939;
+            --muted: #667085;
+            --line: #E6ECEB;
+            --zero: #B6BDC8;
+            --brand: #095550;
+            --brand-soft: #E3EFEE;
+            --brand-2: #0C6B64;
+            --brand-ink: #063C39;
+            --c1: #095550;
+            --c1s: #E3EFEE;
+            --c2: #095550;
+            --c2s: #E3EFEE;
+            --c3: #095550;
+            --c3s: #E3EFEE;
+            --c4: #095550;
+            --c4s: #E3EFEE;
+            --c5: #095550;
+            --c5s: #E3EFEE;
+            --c6: #095550;
+            --c6s: #E3EFEE;
+            --c7: #095550;
+            --c7s: #E3EFEE;
+            --c8: #095550;
+            --c8s: #E3EFEE;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+            color-scheme: light;
+        }
+
+        html {
+            scroll-padding-top: env(safe-area-inset-top, 0px);
+            background: #FFFFFF !important;
+            color-scheme: only light
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: #FFFFFF !important;
+            color: var(--ink);
+            font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            font-size: 15px;
+            line-height: 1.45;
+            font-variant-numeric: tabular-nums
+        }
+
+        .wrap {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px
+        }
+
+        .band {
+            background: var(--brand);
+            color: #fff
+        }
+
+        .band .sub {
+            color: #B7D3CF
+        }
+
+        header.top {
+            padding: 28px 0 26px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            gap: 16px 24px
+        }
+
+        .hero {
+            flex: 1 1 420px
+        }
+
+        h1 {
+            font-weight: 600;
+            letter-spacing: -.015em;
+            font-size: clamp(24px, 3.4vw, 34px);
+            line-height: 1.08;
+            margin: 0
+        }
+
+        h1 .em {
+            display: inline-block;
+            margin-right: 8px
+        }
+
+        .sub {
+            color: var(--muted);
+            margin: 6px 0 0;
+            font-weight: 400
+        }
+
+        .tabs {
+            display: inline-flex;
+            gap: 4px;
+            background: rgba(255, 255, 255, .1);
+            padding: 4px;
+            border-radius: 10px
+        }
+
+        .tab {
+            appearance: none;
+            border: 0;
+            background: none;
+            color: #CFE3E0;
+            font: inherit;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 8px 16px;
+            border-radius: 7px;
+            cursor: pointer
+        }
+
+        .tab[aria-selected="true"] {
+            color: var(--brand);
+            background: #fff
+        }
+
+        .tab:focus-visible,
+        button:focus-visible,
+        select:focus-visible,
+        input:focus-visible,
+        summary:focus-visible,
+        tr:focus-visible {
+            outline: 2px solid #4FB3A9;
+            outline-offset: 2px
+        }
+
+        .ribbon {
+            display: grid;
+            grid-template-columns: repeat(8, minmax(0, 1fr));
+            gap: 0;
+            margin: 24px 0 0;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            overflow: hidden
+        }
+
+        .tile {
+            background: var(--surface);
+            padding: 16px 16px 14px;
+            border-left: 1px solid var(--line)
+        }
+
+        .tile:first-child {
+            border-left: 0
+        }
+
+        .ib {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: var(--s);
+            color: var(--c);
+            display: grid;
+            place-items: center;
+            flex: none
+        }
+
+        .ib .i {
+            width: 19px;
+            height: 19px
+        }
+
+        .tile b {
+            display: block;
+            font-weight: 700;
+            font-size: 28px;
+            line-height: 1.05;
+            color: var(--brand);
+            margin-top: 10px;
+            letter-spacing: -.01em
+        }
+
+        .tile span {
+            display: block;
+            font-weight: 600;
+            font-size: 13px
+        }
+
+        .tile small {
+            display: block;
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 3px;
+            font-weight: 400;
+            line-height: 1.3
+        }
+
+        @media (max-width:1000px) {
+            .ribbon {
+                grid-template-columns: repeat(4, minmax(0, 1fr))
+            }
+
+            .tile {
+                border-top: 1px solid var(--line)
+            }
+
+            .tile:nth-child(4n+1) {
+                border-left: 0
+            }
+        }
+
+        @media (max-width:480px) {
+            .ribbon {
+                grid-template-columns: repeat(2, minmax(0, 1fr))
+            }
+        }
+
+        .filters {
+            position: sticky;
+            top: env(safe-area-inset-top, 0px);
+            z-index: 5;
+            margin: 18px 0 6px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            box-shadow: 0 4px 14px -10px rgba(9, 85, 80, .35)
+        }
+
+        .f-row {
+            display: grid;
+            grid-template-columns: minmax(220px, 1.6fr) repeat(3, minmax(140px, 1fr)) auto;
+            gap: 12px;
+            align-items: end;
+            padding: 14px 16px
+        }
+
+        .fld {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            min-width: 0
+        }
+
+        .fld>span {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--muted)
+        }
+
+        select,
+        input[type=search] {
+            font: inherit;
+            font-size: 14px;
+            color: var(--ink);
+            background-color: var(--surface-2);
+            border: 1px solid transparent;
+            border-radius: 9px;
+            height: 40px;
+            padding: 0 12px;
+            width: 100%;
+            min-width: 0;
+            transition: border-color .15s, background-color .15s
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            padding-right: 34px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23095550' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 16px;
+            cursor: pointer;
+            text-overflow: ellipsis
+        }
+
+        select:hover,
+        input[type=search]:hover {
+            border-color: var(--line)
+        }
+
+        select:focus,
+        input[type=search]:focus {
+            outline: none;
+            border-color: var(--brand);
+            background-color: #fff;
+            box-shadow: 0 0 0 3px var(--brand-soft)
+        }
+
+        select.on {
+            background-color: var(--brand-soft);
+            border-color: var(--brand);
+            color: var(--brand-ink);
+            font-weight: 500
+        }
+
+        .qbox {
+            position: relative
+        }
+
+        .qbox .si {
+            position: absolute;
+            left: 11px;
+            top: 50%;
+            width: 16px;
+            height: 16px;
+            transform: translateY(-50%);
+            color: var(--muted);
+            pointer-events: none
+        }
+
+        .qbox input {
+            padding-left: 34px
+        }
+
+        .clear {
+            height: 40px;
+            font: inherit;
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--brand);
+            background: none;
+            border: 0;
+            padding: 0 6px;
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            text-decoration-color: rgba(9, 85, 80, .35)
+        }
+
+        .clear:disabled {
+            color: var(--zero);
+            text-decoration: none;
+            cursor: default
+        }
+
+        .f-bar {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px 16px;
+            padding: 10px 16px;
+            border-top: 1px solid var(--line);
+            background: var(--surface-2);
+            border-radius: 0 0 14px 14px
+        }
+
+        .count {
+            font-size: 12.5px;
+            font-weight: 500;
+            color: var(--brand-ink);
+            background: var(--brand-soft);
+            padding: 4px 10px;
+            border-radius: 999px
+        }
+
+        .seg {
+            margin-left: auto;
+            display: inline-flex;
+            border: 1px solid var(--line);
+            border-radius: 9px;
+            overflow: hidden;
+            background: #fff
+        }
+
+        .seg .btn {
+            font: inherit;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--brand);
+            background: none;
+            border: 0;
+            padding: 7px 13px;
+            cursor: pointer
+        }
+
+        .seg .btn+.btn {
+            border-left: 1px solid var(--line)
+        }
+
+        .seg .btn:hover {
+            background: var(--brand-soft)
+        }
+
+        @media (max-width:900px) {
+            .f-row {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .fld-q {
+                grid-column: 1/-1
+            }
+
+            .clear {
+                justify-self: start
+            }
+
+            .seg {
+                margin-left: 0
+            }
+        }
+
+        @media (max-width:480px) {
+            .f-row {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+
+            select,
+            input[type=search] {
+                transition: none
+            }
+        }
+
+        .region {
+            margin: 30px 0 10px;
+            font-weight: 600;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--brand);
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--brand)
+        }
+
+        .region em {
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12.5px;
+            color: var(--brand);
+            background: var(--brand-soft);
+            padding: 3px 10px;
+            border-radius: 999px
+        }
+
+        details.cdc {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            margin: 10px 0;
+            overflow: hidden
+        }
+
+        details.cdc[open] {
+            border-color: var(--brand);
+            box-shadow: inset 4px 0 0 var(--brand)
+        }
+
+        details.cdc>summary:hover {
+            background: var(--surface-2)
+        }
+
+        details.cdc>summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            display: grid;
+            grid-template-columns: minmax(220px, 1.1fr) 3fr;
+            gap: 16px;
+            align-items: center
+        }
+
+        details.cdc>summary::-webkit-details-marker {
+            display: none
+        }
+
+        .cdc-id {
+            display: flex;
+            gap: 12px;
+            align-items: center
+        }
+
+        .chev {
+            width: 28px;
+            height: 28px;
+            flex: none;
+            border-radius: 50%;
+            background: var(--brand-soft);
+            color: var(--brand);
+            display: grid;
+            place-items: center;
+            transition: transform .2s
+        }
+
+        .chev svg {
+            width: 16px;
+            height: 16px
+        }
+
+        details[open]>summary .chev {
+            transform: rotate(90deg);
+            background: var(--brand);
+            color: #fff
+        }
+
+        .cdc-name {
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 1.2
+        }
+
+        .cdc-meta {
+            color: var(--muted);
+            font-size: 12.5px;
+            margin-top: 2px;
+            font-weight: 400
+        }
+
+        .strip {
+            display: grid;
+            grid-template-columns: repeat(8, minmax(0, 1fr));
+            gap: 6px
+        }
+
+        .pill {
+            background: transparent;
+            border-left: 1px solid var(--line);
+            border-radius: 0;
+            padding: 2px 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px
+        }
+
+        .pill .pi {
+            width: 14px;
+            height: 14px;
+            color: var(--c);
+            flex: none
+        }
+
+        .pill>div {
+            min-width: 0
+        }
+
+        .pill b {
+            display: block;
+            font-weight: 600;
+            font-size: 17px;
+            line-height: 1.1;
+            color: var(--brand)
+        }
+
+        .pill span {
+            display: block;
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 400;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .pill.z {
+            background: transparent
+        }
+
+        .pill.z b,
+        .pill.z .pi {
+            color: var(--zero)
+        }
+
+        @media (max-width:900px) {
+            details.cdc>summary {
+                grid-template-columns: 1fr
+            }
+
+            .strip {
+                grid-template-columns: repeat(4, minmax(0, 1fr))
+            }
+        }
+
+        .teams {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 12px;
+            padding: 16px 16px 18px 20px;
+            background: var(--surface-2);
+            border-top: 1px solid var(--line)
+        }
+
+        .team {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 0;
+            overflow: hidden
+        }
+
+        .team.apoio .team-h {
+            background: var(--brand-soft)
+        }
+
+        .team-h {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .team h3 {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--brand-ink);
+            line-height: 1.2
+        }
+
+        .team .code {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 400
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11.5px;
+            font-weight: 600;
+            color: #fff;
+            background: var(--brand);
+            border-radius: 999px;
+            padding: 3px 9px;
+            white-space: nowrap
+        }
+
+        .mini {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0
+        }
+
+        .m {
+            background: var(--surface);
+            border: 0;
+            border-bottom: 1px solid var(--line);
+            border-radius: 0;
+            padding: 10px 14px;
+            display: flex;
+            gap: 9px;
+            align-items: flex-start
+        }
+
+        .m .ib {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px
+        }
+
+        .m .ib .i {
+            width: 16px;
+            height: 16px
+        }
+
+        .m b {
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 1.05;
+            color: var(--brand);
+            display: block
+        }
+
+        .m span {
+            display: block;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 1.2
+        }
+
+        .m small {
+            display: block;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 400;
+            line-height: 1.3;
+            margin-top: 2px
+        }
+
+        .m.z {
+            background: var(--surface)
+        }
+
+        .m.z b,
+        .m.z span,
+        .m.z small {
+            color: var(--zero)
+        }
+
+        .m.z .ib {
+            background: transparent;
+            color: var(--zero)
+        }
+
+        .m.wide {
+            grid-column: span 2;
+            border-bottom: 0
+        }
+
+        .m:nth-child(odd):not(.wide) {
+            border-right: 1px solid var(--line)
+        }
+
+        .empty {
+            padding: 40px 0;
+            color: var(--muted);
+            text-align: center;
+            font-weight: 400
+        }
+
+        .tbl-wrap {
+            overflow-x: auto;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            margin: 16px 0 30px
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            font-size: 13.5px;
+            min-width: 1060px
+        }
+
+        th,
+        td {
+            padding: 9px 10px;
+            text-align: right;
+            border-bottom: 1px solid var(--line);
+            white-space: nowrap
+        }
+
+        th {
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--muted);
+            vertical-align: bottom
+        }
+
+        th.grp {
+            text-align: center;
+            color: #fff;
+            background: var(--brand);
+            font-size: 13px;
+            border-bottom: 0;
+            border-left: 1px solid rgba(255, 255, 255, .15)
+        }
+
+        th.subh {
+            background: var(--brand-soft);
+            color: var(--brand-ink);
+            font-weight: 500
+        }
+
+        td.l,
+        th.l {
+            text-align: left;
+            width: 1%
+        }
+
+        thead th.l {
+            background: var(--brand);
+            color: #fff;
+            font-size: 13px
+        }
+
+        td.z {
+            color: var(--zero)
+        }
+
+        td.tot {
+            font-weight: 700
+        }
+
+        tbody tr.row {
+            cursor: pointer
+        }
+
+        tbody tr.row:hover td {
+            background: var(--brand-soft)
+        }
+
+        tr.reg td {
+            background: var(--surface);
+            font-weight: 600;
+            font-size: 15px;
+            text-align: left;
+            padding-top: 16px;
+            color: var(--brand)
+        }
+
+        tr.sub td {
+            font-weight: 600;
+            background: var(--surface-2)
+        }
+
+        tfoot td {
+            font-weight: 600;
+            background: var(--brand);
+            color: #fff;
+            border-bottom: 0
+        }
+
+        .con {
+            font-weight: 700
+        }
+
+        .con-bar {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px 14px;
+            margin: 18px 0 0
+        }
+
+        .con-bar .hint {
+            margin: 0
+        }
+
+        .hint {
+            color: var(--muted);
+            font-size: 13.5px;
+            margin: 14px 0 0;
+            font-weight: 400
+        }
+
+        .note {
+            color: var(--muted);
+            font-size: 12.5px;
+            margin: 32px 0 36px;
+            max-width: 80ch;
+            font-weight: 400;
+            background: var(--surface);
+            border-radius: 14px;
+            padding: 12px 14px;
+            border: 0;
+            border-left: 3px solid var(--brand);
+            border-radius: 0 10px 10px 0;
+            background: var(--surface-2);
+            display: flex;
+            gap: 10px;
+            align-items: flex-start
+        }
+
+        .ti {
+            width: 13px;
+            height: 13px
+        }
+
+        .ni {
+            width: 18px;
+            height: 18px;
+            flex: none;
+            color: var(--brand);
+            margin-top: 1px
+        }
+
+        /* resumo */
+        .rs-reg {
+            margin: 26px 0 0
+        }
+
+        .rs-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--brand);
+            margin-bottom: 12px
+        }
+
+        .rs-head h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--brand)
+        }
+
+        .rs-head p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        .rs-head p b {
+            color: var(--brand-ink);
+            font-weight: 600
+        }
+
+        .rs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 520px), 1fr));
+            gap: 12px
+        }
+
+        @media (max-width:480px) {
+            .rs-grid {
+                grid-template-columns: 1fr
+            }
+
+            .rc-g {
+                grid-template-columns: repeat(2, minmax(0, 1fr))
+            }
+
+            .rv {
+                border-right: 1px solid var(--line) !important;
+                border-bottom: 1px solid var(--line) !important
+            }
+        }
+
+        .rc {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--surface);
+            display: flex;
+            flex-direction: column
+        }
+
+        .rc-h {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            background: var(--brand);
+            color: #fff
+        }
+
+        .rc-h h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -.01em
+        }
+
+        .rc-h span {
+            font-size: 12px;
+            color: #CFE3E0;
+            text-align: right
+        }
+
+        .rc.semc .rc-h {
+            background: var(--brand-soft);
+            color: var(--brand-ink)
+        }
+
+        .rc.semc .rc-h h3 {
+            font-size: 14.5px;
+            font-weight: 600
+        }
+
+        .rc.semc .rc-h span {
+            color: var(--muted)
+        }
+
+        .rc-g {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr))
+        }
+
+        .rv {
+            padding: 9px 10px 10px;
+            border-right: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            min-width: 0
+        }
+
+        .rv:nth-child(5n) {
+            border-right: 0
+        }
+
+        .rv:nth-last-child(-n+5) {
+            border-bottom: 0
+        }
+
+        .rv .lb {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .rv .lb svg {
+            width: 13px;
+            height: 13px;
+            color: var(--brand);
+            flex: none
+        }
+
+        .rv b {
+            display: block;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--brand);
+            line-height: 1.15;
+            margin-top: 3px
+        }
+
+        .rv small {
+            display: block;
+            font-size: 10.5px;
+            color: var(--muted);
+            line-height: 1.25;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .rv.z b,
+        .rv.z .lb svg {
+            color: var(--zero)
+        }
+
+        [hidden] {
+            display: none !important
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+            .chev {
+                transition: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="band">
+        <div class="wrap">
+            <header class="top">
+                <div class="hero">
+                    <h1>Estrutura operacional por equipe e contrato</h1>
+                    <p class="sub">Referência: outubro de 2026</p>
+                </div>
+                <div class="tabs" role="tablist">
+                    <button class="tab" role="tab" id="t-eq" aria-selected="true" aria-controls="p-eq">Por
+                        equipe</button>
+                    <button class="tab" role="tab" id="t-con" aria-selected="false" aria-controls="p-con">Por
+                        contrato</button>
+                    <button class="tab" role="tab" id="t-res" aria-selected="false"
+                        aria-controls="p-res">Resumo</button>
+                </div>
+            </header>
+        </div>
+    </div>
+    <div class="wrap">
+
+        <section id="p-eq" role="tabpanel" aria-labelledby="t-eq">
+            <div class="ribbon" id="rib-eq"></div>
+            <div class="filters">
+                <div class="f-row">
+                    <label class="fld fld-q"><span>Buscar</span>
+                        <div class="qbox"><svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="11" cy="11" r="7" />
+                                <path d="m20 20-3.5-3.5" />
+                            </svg><input type="search" id="f-q" placeholder="CDC ou equipe, ex.: C02 - BA"></div>
+                    </label>
+                    <label class="fld"><span>Região</span><select id="f-reg"></select></label>
+                    <label class="fld"><span>Regional</span><select id="f-rgl"></select></label>
+                    <label class="fld"><span>Contrato</span><select id="f-con"></select></label>
+                    <button class="clear" id="b-clear" type="button">Limpar filtros</button>
+                </div>
+                <div class="f-bar">
+                    <span class="count" id="cnt"></span>
+                    <div class="seg" role="group" aria-label="Exibição dos CDCs">
+                        <button class="btn" id="b-open" type="button">Expandir todos</button>
+                        <button class="btn" id="b-close" type="button">Recolher todos</button>
+                    </div>
+                </div>
+            </div>
+            <div id="list"></div>
+        </section>
+
+        <section id="p-res" role="tabpanel" aria-labelledby="t-res" hidden>
+            <div class="ribbon" id="rib-res"></div>
+            <div id="res"></div>
+        </section>
+
+        <section id="p-con" role="tabpanel" aria-labelledby="t-con" hidden>
+            <div class="ribbon" id="rib-con"></div>
+            <div class="con-bar"><span class="count" id="cnt-con"></span>
+                <p class="hint">Clique em um contrato para ver as equipes dele na aba Por equipe.</p>
+            </div>
+            <div class="tbl-wrap">
+                <table id="tbl"></table>
+            </div>
+        </section>
+
+        <p class="note"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 16v-4" />
+                <path d="M12 8h.01" />
+            </svg><span>Caminhões de operação somam toco e truck; caminhões de apoio são as pranchas. A planilha não
+                traz uma classificação separada para comboio, então eventuais comboios estão contados como toco ou
+                truck. Veículos nas frentes somam veículos leves, médios e vans. Equipes com "Apoio" no nome aparecem
+                destacadas.</span></p>
+    </div>
+
+    <script>
+        const D = { "e": [{ "reg": "DESENVOLVIMENTO SOCIAL", "rgl": "Sem regional", "con": "Sem contrato operacional", "cdc": "2400", "cdcd": "DESENVOLVIMENTO SOCIAL", "cod": "23", "eq": "APOIO SUPLEMENTAR", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "DESENVOLVIMENTO SOCIAL", "rgl": "Sem regional", "con": "Sem contrato operacional", "cdc": "2400", "cdcd": "DESENVOLVIMENTO SOCIAL", "cod": "2400", "eq": "DESENVOLVIMENTO", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "DESENVOLVIMENTO SOCIAL", "rgl": "Sem regional", "con": "Sem contrato operacional", "cdc": "2400", "cdcd": "DESENVOLVIMENTO SOCIAL", "cod": "321", "eq": "DESENVOLVIMENTO MS1", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "DESENVOLVIMENTO SOCIAL", "rgl": "Sem regional", "con": "Sem contrato operacional", "cdc": "2400", "cdcd": "DESENVOLVIMENTO SOCIAL", "cod": "421", "eq": "DESENVOLVIMENTO SP2", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "DESENVOLVIMENTO SOCIAL", "rgl": "Sem regional", "con": "Sem contrato operacional", "cdc": "2400", "cdcd": "DESENVOLVIMENTO SOCIAL", "cod": "531", "eq": "DESENVOLVIMENTO RS", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42401", "cdcd": "C02 - SUZANO SMA", "cod": "42402", "eq": "C02 - BA", "coord": 0, "serv": 33, "tl": 0, "tm": 3, "tp": 0, "te": 0, "esc": 0, "trat": 3, "ct": 0, "ctr": 1, "cp": 0, "mot": 2, "vl": 1, "vm": 0, "oni": 1, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42401", "cdcd": "C02 - SUZANO SMA", "cod": "42403", "eq": "C02 - BB", "coord": 0, "serv": 34, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42401", "cdcd": "C02 - SUZANO SMA", "cod": "42405", "eq": "C02 - BD", "coord": 0, "serv": 36, "tl": 0, "tm": 2, "tp": 0, "te": 0, "esc": 0, "trat": 3, "ct": 0, "ctr": 2, "cp": 0, "mot": 2, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42401", "cdcd": "C02 - SUZANO SMA", "cod": "42406", "eq": "C02 - BG", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 2, "te": 0, "esc": 0, "trat": 6, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42401", "cdcd": "C02 - SUZANO SMA", "cod": "42407", "eq": "C02 - BH", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42401", "cdcd": "C02 - SUZANO SMA", "cod": "42408", "eq": "C02 - BJ", "coord": 0, "serv": 0, "tl": 0, "tm": 4, "tp": 1, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42401", "cdcd": "C02 - SUZANO SMA", "cod": "42409", "eq": "C02 - BM", "coord": 0, "serv": 21, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 1, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 2, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42401", "cdcd": "C02 - SUZANO SMA", "cod": "42410", "eq": "C02 - BN", "coord": 0, "serv": 2, "tl": 0, "tm": 6, "tp": 0, "te": 0, "esc": 0, "trat": 7, "ct": 0, "ctr": 2, "cp": 0, "mot": 3, "vl": 5, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42401", "cdcd": "C02 - SUZANO SMA", "cod": "42411", "eq": "C02 - BO", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42401", "cdcd": "C02 - SUZANO SMA", "cod": "42412", "eq": "C02 - BP", "coord": 0, "serv": 9, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 3, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42401", "cdcd": "C02 - SUZANO SMA", "cod": "42413", "eq": "C02 - BT", "coord": 0, "serv": 0, "tl": 0, "tm": 1, "tp": 1, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 1, "cp": 0, "mot": 1, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42401", "cdcd": "C02 - SUZANO SMA", "cod": "42414", "eq": "C02 - BU", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 3, "te": 0, "esc": 0, "trat": 2, "ct": 0, "ctr": 1, "cp": 0, "mot": 2, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42401", "cdcd": "C02 - SUZANO SMA", "cod": "42415", "eq": "C02 - APOIO 1", "coord": 0, "serv": 2, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 3, "ctr": 5, "cp": 0, "mot": 5, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42401", "cdcd": "C02 - SUZANO SMA", "cod": "42416", "eq": "C02 - BV", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42501", "cdcd": "C02 - BRACELL CBO", "cod": "42501", "eq": "C02 - BRACELL CBO", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 1, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42501", "cdcd": "C02 - BRACELL CBO", "cod": "42502", "eq": "C02 - A", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42501", "cdcd": "C02 - BRACELL CBO", "cod": "42503", "eq": "C02 - B", "coord": 0, "serv": 29, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 1, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42501", "cdcd": "C02 - BRACELL CBO", "cod": "42504", "eq": "C02 - C", "coord": 0, "serv": 3, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42501", "cdcd": "C02 - BRACELL CBO", "cod": "42505", "eq": "C02 - D", "coord": 0, "serv": 6, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42501", "cdcd": "C02 - BRACELL CBO", "cod": "42506", "eq": "C02 - E", "coord": 0, "serv": 30, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42501", "cdcd": "C02 - BRACELL CBO", "cod": "42507", "eq": "C02 - F", "coord": 0, "serv": 8, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42501", "cdcd": "C02 - BRACELL CBO", "cod": "42508", "eq": "C02 - G", "coord": 0, "serv": 0, "tl": 0, "tm": 8, "tp": 2, "te": 0, "esc": 0, "trat": 7, "ct": 0, "ctr": 2, "cp": 0, "mot": 5, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42501", "cdcd": "C02 - BRACELL CBO", "cod": "42510", "eq": "C02 - APOIO 4", "coord": 0, "serv": 1, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42550", "cdcd": "C02 - SUZANO CBO", "cod": "42550", "eq": "C02 - SUZANO CBO", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42550", "cdcd": "C02 - SUZANO CBO", "cod": "42551", "eq": "C02 - H", "coord": 0, "serv": 15, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42550", "cdcd": "C02 - SUZANO CBO", "cod": "42553", "eq": "C02 - J", "coord": 0, "serv": 24, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 2, "ct": 0, "ctr": 0, "cp": 0, "mot": 1, "vl": 1, "vm": 0, "oni": 1, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42550", "cdcd": "C02 - SUZANO CBO", "cod": "42554", "eq": "C02 - K", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 1, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42550", "cdcd": "C02 - SUZANO CBO", "cod": "42556", "eq": "C02 - S", "coord": 0, "serv": 0, "tl": 0, "tm": 10, "tp": 4, "te": 0, "esc": 0, "trat": 27, "ct": 0, "ctr": 6, "cp": 0, "mot": 13, "vl": 8, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42550", "cdcd": "C02 - SUZANO CBO", "cod": "42558", "eq": "C02 - Z", "coord": 0, "serv": 24, "tl": 0, "tm": 2, "tp": 0, "te": 0, "esc": 0, "trat": 2, "ct": 0, "ctr": 1, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42550", "cdcd": "C02 - SUZANO CBO", "cod": "42559", "eq": "C02 - APOIO 3", "coord": 0, "serv": 1, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42550", "cdcd": "C02 - SUZANO CBO", "cod": "42602", "eq": "C02 - CA", "coord": 0, "serv": 4, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42550", "cdcd": "C02 - SUZANO CBO", "cod": "42603", "eq": "C02 - CB", "coord": 0, "serv": 30, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 1, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 2, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "cdc": "42550", "cdcd": "C02 - SUZANO CBO", "cod": "42605", "eq": "C02 - CE", "coord": 0, "serv": 26, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42201", "cdcd": "C04 - SUZANO SANTA BRANCA", "cod": "42202", "eq": "C04 - C", "coord": 0, "serv": 13, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42201", "cdcd": "C04 - SUZANO SANTA BRANCA", "cod": "42203", "eq": "C04 - D", "coord": 0, "serv": 20, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42201", "cdcd": "C04 - SUZANO SANTA BRANCA", "cod": "42204", "eq": "C04 - E", "coord": 0, "serv": 26, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42201", "cdcd": "C04 - SUZANO SANTA BRANCA", "cod": "42205", "eq": "C04 - G", "coord": 0, "serv": 16, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42201", "cdcd": "C04 - SUZANO SANTA BRANCA", "cod": "42206", "eq": "C04 - H", "coord": 0, "serv": 19, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 1, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42201", "cdcd": "C04 - SUZANO SANTA BRANCA", "cod": "42207", "eq": "C04 - K", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42201", "cdcd": "C04 - SUZANO SANTA BRANCA", "cod": "42208", "eq": "C04 - APOIO 1", "coord": 0, "serv": 1, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 1, "cp": 0, "mot": 2, "vl": 1, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42201", "cdcd": "C04 - SUZANO SANTA BRANCA", "cod": "42209", "eq": "C04 - N", "coord": 0, "serv": 19, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 2, "ct": 0, "ctr": 0, "cp": 0, "mot": 1, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42201", "cdcd": "C04 - SUZANO SANTA BRANCA", "cod": "42211", "eq": "C04 - S", "coord": 0, "serv": 9, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 1, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42250", "cdcd": "C04 - SUZANO VIVEIRO VALE", "cod": "42250", "eq": "C04 - SUZANO VIVEIRO VALE", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42250", "cdcd": "C04 - SUZANO VIVEIRO VALE", "cod": "42251", "eq": "C04 - I", "coord": 0, "serv": 15, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42250", "cdcd": "C04 - SUZANO VIVEIRO VALE", "cod": "42252", "eq": "C04 - APOIO 2", "coord": 0, "serv": 3, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42301", "cdcd": "C04 - SUZANO CACAPAVA", "cod": "42303", "eq": "C04 - B", "coord": 0, "serv": 14, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 1, "cp": 0, "mot": 1, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42301", "cdcd": "C04 - SUZANO CACAPAVA", "cod": "42304", "eq": "C04 - F", "coord": 0, "serv": 29, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42301", "cdcd": "C04 - SUZANO CACAPAVA", "cod": "42305", "eq": "C04 - J", "coord": 0, "serv": 19, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42301", "cdcd": "C04 - SUZANO CACAPAVA", "cod": "42306", "eq": "C04 - L", "coord": 0, "serv": 20, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42301", "cdcd": "C04 - SUZANO CACAPAVA", "cod": "42307", "eq": "C04 - M", "coord": 0, "serv": 5, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 1, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42301", "cdcd": "C04 - SUZANO CACAPAVA", "cod": "42308", "eq": "C04 - APOIO 3", "coord": 0, "serv": 1, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 2, "ct": 0, "ctr": 1, "cp": 0, "mot": 1, "vl": 1, "vm": 4, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42301", "cdcd": "C04 - SUZANO CACAPAVA", "cod": "42309", "eq": "C04 - P", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "cdc": "42301", "cdcd": "C04 - SUZANO CACAPAVA", "cod": "42311", "eq": "C04 - R", "coord": 0, "serv": 18, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "Sem contrato operacional", "cdc": "2043", "cdcd": "OFICINA SMA", "cod": "2043", "eq": "OFICINA SMA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 1 }, { "reg": "LESTE", "rgl": "SP1", "con": "Sem contrato operacional", "cdc": "2044", "cdcd": "OFICINA SUZANO CBO", "cod": "2044", "eq": "OFICINA SUZANO CBO", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 3, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 1, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "Sem contrato operacional", "cdc": "2048", "cdcd": "OFICINA BRACELL CBO", "cod": "2048", "eq": "OFICINA BRACELL CBO", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "Sem contrato operacional", "cdc": "2141", "cdcd": "SSMA SANTA BRANCA", "cod": "2141", "eq": "SSMA SANTA BRANCA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "Sem contrato operacional", "cdc": "2142", "cdcd": "SSMA CACAPAVA", "cod": "2142", "eq": "SSMA CACAPAVA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "Sem contrato operacional", "cdc": "2143", "cdcd": "SSMA SMA", "cod": "2143", "eq": "SSMA SMA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "Sem contrato operacional", "cdc": "2144", "cdcd": "SSMA SUZANO CBO", "cod": "2144", "eq": "SSMA SUZANO CBO", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "Sem contrato operacional", "cdc": "2147", "cdcd": "SSMA SP1", "cod": "2147", "eq": "SSMA SP1", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "Sem contrato operacional", "cdc": "2148", "cdcd": "SSMA BRACELL CBO", "cod": "2148", "eq": "SSMA BRACELL CBO", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "Sem contrato operacional", "cdc": "42200", "cdcd": "GESTAO OP SANTA BRANCA", "cod": "42200", "eq": "GESTAO OP SANTA BRANCA", "coord": 1, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 4, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 1, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "Sem contrato operacional", "cdc": "42300", "cdcd": "GESTAO OP CACAPAVA", "cod": "42300", "eq": "GESTAO OP CACAPAVA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 4, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 2, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "Sem contrato operacional", "cdc": "42400", "cdcd": "GESTAO OP SMA", "cod": "42400", "eq": "GESTAO OP SMA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 4, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 3, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "Sem contrato operacional", "cdc": "42500", "cdcd": "GESTAO OP SUZANO CBO", "cod": "42500", "eq": "GESTAO OP SUZANO CBO", "coord": 1, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 5, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 3, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "Sem contrato operacional", "cdc": "42900", "cdcd": "GESTAO OP BRACELL CBO", "cod": "42900", "eq": "GESTAO OP BRACELL CBO", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 5, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 1, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "Sem contrato operacional", "cdc": "430", "cdcd": "GESTAO OP SP1", "cod": "430", "eq": "GESTAO OP SP1", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "Sem contrato operacional", "cdc": "431", "cdcd": "QUALIDADE SP1", "cod": "431", "eq": "QUALIDADE SP1", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "Sem contrato operacional", "cdc": "71100", "cdcd": "P01 - ESCAVADEIRA HIDRAULICA", "cod": "71100", "eq": "P01 - ESCAVADEIRA HIDRAULICA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 2, "trat": 10, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 4, "vm": 0, "oni": 0, "van": 0, "enc": 3, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41401", "cdcd": "C03 - BRACELL DOURADO", "cod": "41402", "eq": "C03 - AA", "coord": 0, "serv": 32, "tl": 0, "tm": 3, "tp": 0, "te": 0, "esc": 0, "trat": 3, "ct": 0, "ctr": 2, "cp": 0, "mot": 2, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41401", "cdcd": "C03 - BRACELL DOURADO", "cod": "41403", "eq": "C03 - CC", "coord": 0, "serv": 0, "tl": 0, "tm": 4, "tp": 0, "te": 0, "esc": 0, "trat": 6, "ct": 1, "ctr": 0, "cp": 0, "mot": 2, "vl": 1, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41401", "cdcd": "C03 - BRACELL DOURADO", "cod": "41404", "eq": "C03 - EE", "coord": 0, "serv": 7, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41401", "cdcd": "C03 - BRACELL DOURADO", "cod": "41405", "eq": "C03 - APOIO 1", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 1, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41401", "cdcd": "C03 - BRACELL DOURADO", "cod": "41406", "eq": "C03 - DD", "coord": 0, "serv": 7, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 2, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41450", "cdcd": "C03 - EUCATEX DOURADO", "cod": "41451", "eq": "C03 - FF", "coord": 0, "serv": 11, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41450", "cdcd": "C03 - EUCATEX DOURADO", "cod": "41452", "eq": "C03 - GG", "coord": 0, "serv": 7, "tl": 0, "tm": 3, "tp": 0, "te": 0, "esc": 0, "trat": 2, "ct": 0, "ctr": 2, "cp": 0, "mot": 1, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41501", "cdcd": "C03 - BRACELL ITATINGA", "cod": "41503", "eq": "C03 - B", "coord": 0, "serv": 0, "tl": 0, "tm": 5, "tp": 0, "te": 0, "esc": 0, "trat": 3, "ct": 0, "ctr": 1, "cp": 0, "mot": 1, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41501", "cdcd": "C03 - BRACELL ITATINGA", "cod": "41504", "eq": "C03 - E", "coord": 0, "serv": 3, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41501", "cdcd": "C03 - BRACELL ITATINGA", "cod": "41505", "eq": "C03 - F", "coord": 0, "serv": 0, "tl": 0, "tm": 5, "tp": 0, "te": 0, "esc": 0, "trat": 6, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41501", "cdcd": "C03 - BRACELL ITATINGA", "cod": "41507", "eq": "C03 - H", "coord": 0, "serv": 31, "tl": 0, "tm": 5, "tp": 0, "te": 0, "esc": 0, "trat": 5, "ct": 0, "ctr": 2, "cp": 0, "mot": 2, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 2, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41501", "cdcd": "C03 - BRACELL ITATINGA", "cod": "41510", "eq": "C03 - K", "coord": 0, "serv": 5, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41501", "cdcd": "C03 - BRACELL ITATINGA", "cod": "41511", "eq": "C03 - L", "coord": 0, "serv": 17, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 1, "oni": 2, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41501", "cdcd": "C03 - BRACELL ITATINGA", "cod": "41513", "eq": "C03 - APOIO 2", "coord": 0, "serv": 9, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 3, "ct": 0, "ctr": 4, "cp": 0, "mot": 4, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 2, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41501", "cdcd": "C03 - BRACELL ITATINGA", "cod": "41514", "eq": "C03 - C", "coord": 0, "serv": 1, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41601", "cdcd": "C03 - EUCATEX ITATINGA", "cod": "41602", "eq": "C03 - M", "coord": 0, "serv": 0, "tl": 0, "tm": 3, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 1, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41601", "cdcd": "C03 - EUCATEX ITATINGA", "cod": "41603", "eq": "C03 - O", "coord": 0, "serv": 20, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41601", "cdcd": "C03 - EUCATEX ITATINGA", "cod": "41604", "eq": "C03 - P", "coord": 0, "serv": 28, "tl": 0, "tm": 1, "tp": 1, "te": 0, "esc": 0, "trat": 4, "ct": 0, "ctr": 2, "cp": 0, "mot": 2, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41601", "cdcd": "C03 - EUCATEX ITATINGA", "cod": "41606", "eq": "C03 - U", "coord": 0, "serv": 2, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41601", "cdcd": "C03 - EUCATEX ITATINGA", "cod": "41607", "eq": "C03 - V", "coord": 0, "serv": 8, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41601", "cdcd": "C03 - EUCATEX ITATINGA", "cod": "41608", "eq": "C03 - W", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 1, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41601", "cdcd": "C03 - EUCATEX ITATINGA", "cod": "41609", "eq": "C03 - X", "coord": 0, "serv": 20, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 1, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41601", "cdcd": "C03 - EUCATEX ITATINGA", "cod": "41610", "eq": "C03 - Y", "coord": 0, "serv": 14, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41601", "cdcd": "C03 - EUCATEX ITATINGA", "cod": "41611", "eq": "C03 - APOIO 3", "coord": 0, "serv": 1, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 2, "ct": 4, "ctr": 0, "cp": 1, "mot": 1, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41801", "cdcd": "C03 - EUCATEX ITATINGA MECANIZADO", "cod": "41802", "eq": "C25 - A", "coord": 0, "serv": 0, "tl": 0, "tm": 1, "tp": 0, "te": 1, "esc": 0, "trat": 4, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41801", "cdcd": "C03 - EUCATEX ITATINGA MECANIZADO", "cod": "41803", "eq": "C25 - B", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 1, "esc": 0, "trat": 4, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41801", "cdcd": "C03 - EUCATEX ITATINGA MECANIZADO", "cod": "41804", "eq": "C25 - C", "coord": 0, "serv": 0, "tl": 0, "tm": 2, "tp": 3, "te": 0, "esc": 0, "trat": 3, "ct": 0, "ctr": 1, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41801", "cdcd": "C03 - EUCATEX ITATINGA MECANIZADO", "cod": "41805", "eq": "C25 - D", "coord": 0, "serv": 0, "tl": 0, "tm": 4, "tp": 0, "te": 0, "esc": 0, "trat": 4, "ct": 0, "ctr": 1, "cp": 0, "mot": 1, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41801", "cdcd": "C03 - EUCATEX ITATINGA MECANIZADO", "cod": "41806", "eq": "C25 - E", "coord": 0, "serv": 0, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 3, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41801", "cdcd": "C03 - EUCATEX ITATINGA MECANIZADO", "cod": "41807", "eq": "C25 - F", "coord": 0, "serv": 1, "tl": 0, "tm": 3, "tp": 0, "te": 0, "esc": 0, "trat": 3, "ct": 1, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41801", "cdcd": "C03 - EUCATEX ITATINGA MECANIZADO", "cod": "41808", "eq": "C25 - G", "coord": 0, "serv": 0, "tl": 0, "tm": 4, "tp": 0, "te": 0, "esc": 0, "trat": 4, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "cdc": "41801", "cdcd": "C03 - EUCATEX ITATINGA MECANIZADO", "cod": "41809", "eq": "C25 - APOIO", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 2, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41201", "cdcd": "C05 - BRACELL DUARTINA", "cod": "41202", "eq": "C05 - AA", "coord": 0, "serv": 22, "tl": 0, "tm": 0, "tp": 3, "te": 0, "esc": 0, "trat": 3, "ct": 0, "ctr": 2, "cp": 0, "mot": 2, "vl": 1, "vm": 0, "oni": 1, "van": 0, "enc": 2, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41201", "cdcd": "C05 - BRACELL DUARTINA", "cod": "41203", "eq": "C05 - AB", "coord": 0, "serv": 4, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41201", "cdcd": "C05 - BRACELL DUARTINA", "cod": "41204", "eq": "C05 - AC", "coord": 0, "serv": 20, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41201", "cdcd": "C05 - BRACELL DUARTINA", "cod": "41205", "eq": "C05 - AD", "coord": 0, "serv": 0, "tl": 0, "tm": 5, "tp": 0, "te": 0, "esc": 0, "trat": 4, "ct": 0, "ctr": 1, "cp": 0, "mot": 0, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41201", "cdcd": "C05 - BRACELL DUARTINA", "cod": "41206", "eq": "C05 - AE", "coord": 0, "serv": 17, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41201", "cdcd": "C05 - BRACELL DUARTINA", "cod": "41207", "eq": "C05 - AF", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 4, "ct": 0, "ctr": 1, "cp": 0, "mot": 1, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41201", "cdcd": "C05 - BRACELL DUARTINA", "cod": "41208", "eq": "C05 - AG", "coord": 0, "serv": 22, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 1, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41201", "cdcd": "C05 - BRACELL DUARTINA", "cod": "41209", "eq": "C05 - AH", "coord": 0, "serv": 2, "tl": 0, "tm": 6, "tp": 0, "te": 0, "esc": 0, "trat": 7, "ct": 0, "ctr": 0, "cp": 0, "mot": 1, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41201", "cdcd": "C05 - BRACELL DUARTINA", "cod": "41210", "eq": "C05 - AI", "coord": 0, "serv": 23, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41201", "cdcd": "C05 - BRACELL DUARTINA", "cod": "41211", "eq": "C05 - AJ", "coord": 0, "serv": 1, "tl": 0, "tm": 4, "tp": 0, "te": 0, "esc": 0, "trat": 3, "ct": 0, "ctr": 1, "cp": 0, "mot": 1, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41201", "cdcd": "C05 - BRACELL DUARTINA", "cod": "41212", "eq": "C05 - AK", "coord": 0, "serv": 1, "tl": 0, "tm": 5, "tp": 0, "te": 0, "esc": 0, "trat": 3, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 2, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41201", "cdcd": "C05 - BRACELL DUARTINA", "cod": "41214", "eq": "C05 - APOIO 1", "coord": 0, "serv": 3, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 4, "ct": 7, "ctr": 3, "cp": 1, "mot": 7, "vl": 4, "vm": 1, "oni": 0, "van": 0, "enc": 2, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41301", "cdcd": "C05 - SUZANO LENCOIS PAULISTA", "cod": "41301", "eq": "C05 - SUZANO LENCOIS PAULISTA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 1, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41301", "cdcd": "C05 - SUZANO LENCOIS PAULISTA", "cod": "41302", "eq": "C05 - A", "coord": 0, "serv": 3, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41301", "cdcd": "C05 - SUZANO LENCOIS PAULISTA", "cod": "41303", "eq": "C05 - B", "coord": 0, "serv": 0, "tl": 0, "tm": 4, "tp": 0, "te": 0, "esc": 0, "trat": 6, "ct": 0, "ctr": 1, "cp": 0, "mot": 1, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41301", "cdcd": "C05 - SUZANO LENCOIS PAULISTA", "cod": "41304", "eq": "C05 - C", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41301", "cdcd": "C05 - SUZANO LENCOIS PAULISTA", "cod": "41305", "eq": "C05 - D", "coord": 0, "serv": 1, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41301", "cdcd": "C05 - SUZANO LENCOIS PAULISTA", "cod": "41306", "eq": "C05 - E", "coord": 0, "serv": 0, "tl": 0, "tm": 4, "tp": 0, "te": 0, "esc": 0, "trat": 5, "ct": 0, "ctr": 1, "cp": 0, "mot": 1, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41301", "cdcd": "C05 - SUZANO LENCOIS PAULISTA", "cod": "41307", "eq": "C05 - F", "coord": 0, "serv": 12, "tl": 0, "tm": 4, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 2, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41301", "cdcd": "C05 - SUZANO LENCOIS PAULISTA", "cod": "41308", "eq": "C05 - G", "coord": 0, "serv": 0, "tl": 0, "tm": 3, "tp": 1, "te": 0, "esc": 0, "trat": 3, "ct": 0, "ctr": 1, "cp": 0, "mot": 1, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41301", "cdcd": "C05 - SUZANO LENCOIS PAULISTA", "cod": "41309", "eq": "C05 - H", "coord": 0, "serv": 7, "tl": 0, "tm": 3, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41301", "cdcd": "C05 - SUZANO LENCOIS PAULISTA", "cod": "41311", "eq": "C05 - J", "coord": 0, "serv": 33, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 4, "ct": 1, "ctr": 0, "cp": 0, "mot": 2, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 2, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "cdc": "41301", "cdcd": "C05 - SUZANO LENCOIS PAULISTA", "cod": "41312", "eq": "C05 - APOIO 2", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 2, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "2031", "cdcd": "OFICINA DUARTINA", "cod": "2031", "eq": "OFICINA DUARTINA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 4, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "2032", "cdcd": "OFICINA SUZANO LPTA", "cod": "2032", "eq": "OFICINA SUZANO LPTA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 1 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "2033", "cdcd": "OFICINA DOURADO", "cod": "2033", "eq": "OFICINA DOURADO", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "2034", "cdcd": "OFICINA BRACELL ITATINGA", "cod": "2034", "eq": "OFICINA BRACELL ITATINGA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 4, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 1 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "2035", "cdcd": "OFICINA EUCATEX ITATINGA", "cod": "2035", "eq": "OFICINA EUCATEX ITATINGA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 2, "ctr": 0, "cp": 0, "mot": 0, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "2036", "cdcd": "OFICINA EUCATEX ITATINGA MECANIZADO", "cod": "2036", "eq": "OFICINA EUCATEX ITATINGA MECANIZADO", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "2131", "cdcd": "SSMA DUARTINA", "cod": "2131", "eq": "SSMA DUARTINA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "2132", "cdcd": "SSMA SUZANO LPTA", "cod": "2132", "eq": "SSMA SUZANO LPTA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "2134", "cdcd": "SSMA BRACELL ITATINGA", "cod": "2134", "eq": "SSMA BRACELL ITATINGA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "2135", "cdcd": "SSMA EUCATEX ITATINGA", "cod": "2135", "eq": "SSMA EUCATEX ITATINGA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "2140", "cdcd": "SSMA SP2", "cod": "2140", "eq": "SSMA SP2", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "41200", "cdcd": "GESTAO OP DUARTINA", "cod": "41200", "eq": "GESTAO OP DUARTINA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 4, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 2, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "41300", "cdcd": "GESTAO OP SUZANO LPTA", "cod": "41300", "eq": "GESTAO OP SUZANO LPTA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 3, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 4, "supo": 1 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "41400", "cdcd": "GESTAO OP DOURADO", "cod": "41400", "eq": "GESTAO OP DOURADO", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 3, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 2, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "41500", "cdcd": "GESTAO OP BRACELL ITATINGA", "cod": "41500", "eq": "GESTAO OP BRACELL ITATINGA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 4, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 3, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "41600", "cdcd": "GESTAO OP EUCATEX ITATINGA", "cod": "41600", "eq": "GESTAO OP EUCATEX ITATINGA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 2, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 2, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "417", "cdcd": "QUALIDADE SP3", "cod": "417", "eq": "QUALIDADE SP3", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "41800", "cdcd": "GESTAO OP EUCATEX ITATINGA MECANIZADO", "cod": "41800", "eq": "GESTÃO OP EUCATEX ITATINGA MECANIZADO", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 3, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 1, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "420", "cdcd": "GESTAO OP SP2", "cod": "420", "eq": "GESTAO OP SP2", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "cdc": "428", "cdcd": "QUALIDADE SP2", "cod": "428", "eq": "QUALIDADE SP2", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 5, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 1 }, { "reg": "LESTE", "rgl": "Sem regional", "con": "Sem contrato operacional", "cdc": "40", "cdcd": "GESTAO OP LESTE", "cod": "40", "eq": "GESTAO OP LESTE", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C01", "cdc": "32201", "cdcd": "C01 - SUZANO MANUTENCAO AGUA CLARA", "cod": "32202", "eq": "C01 - A", "coord": 0, "serv": 3, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C01", "cdc": "32201", "cdcd": "C01 - SUZANO MANUTENCAO AGUA CLARA", "cod": "32203", "eq": "C01 - B", "coord": 0, "serv": 1, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 3, "ct": 0, "ctr": 1, "cp": 0, "mot": 2, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C01", "cdc": "32201", "cdcd": "C01 - SUZANO MANUTENCAO AGUA CLARA", "cod": "32205", "eq": "C01 - D", "coord": 0, "serv": 2, "tl": 0, "tm": 3, "tp": 0, "te": 0, "esc": 0, "trat": 3, "ct": 0, "ctr": 0, "cp": 0, "mot": 2, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C01", "cdc": "32201", "cdcd": "C01 - SUZANO MANUTENCAO AGUA CLARA", "cod": "32206", "eq": "C01 - E", "coord": 0, "serv": 0, "tl": 0, "tm": 4, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C01", "cdc": "32201", "cdcd": "C01 - SUZANO MANUTENCAO AGUA CLARA", "cod": "32207", "eq": "C01 - F", "coord": 0, "serv": 27, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 1, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C01", "cdc": "32201", "cdcd": "C01 - SUZANO MANUTENCAO AGUA CLARA", "cod": "32208", "eq": "C01 - G", "coord": 0, "serv": 3, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C01", "cdc": "32201", "cdcd": "C01 - SUZANO MANUTENCAO AGUA CLARA", "cod": "32210", "eq": "C01 - I", "coord": 0, "serv": 0, "tl": 0, "tm": 5, "tp": 1, "te": 0, "esc": 0, "trat": 5, "ct": 0, "ctr": 3, "cp": 0, "mot": 0, "vl": 0, "vm": 2, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C01", "cdc": "32201", "cdcd": "C01 - SUZANO MANUTENCAO AGUA CLARA", "cod": "32215", "eq": "C01 - N", "coord": 0, "serv": 27, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C01", "cdc": "32201", "cdcd": "C01 - SUZANO MANUTENCAO AGUA CLARA", "cod": "32216", "eq": "C01 - O", "coord": 0, "serv": 3, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 2, "oni": 0, "van": 0, "enc": 2, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C01", "cdc": "32201", "cdcd": "C01 - SUZANO MANUTENCAO AGUA CLARA", "cod": "32219", "eq": "C01 - APOIO 1", "coord": 0, "serv": 4, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 3, "ct": 0, "ctr": 3, "cp": 2, "mot": 5, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C01", "cdc": "32201", "cdcd": "C01 - SUZANO MANUTENCAO AGUA CLARA", "cod": "32220", "eq": "C01 - S", "coord": 0, "serv": 29, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 2, "vl": 0, "vm": 1, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C01", "cdc": "32201", "cdcd": "C01 - SUZANO MANUTENCAO AGUA CLARA", "cod": "32221", "eq": "C01 - W", "coord": 0, "serv": 4, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C01", "cdc": "32201", "cdcd": "C01 - SUZANO MANUTENCAO AGUA CLARA", "cod": "32222", "eq": "C01 - T", "coord": 0, "serv": 4, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C01", "cdc": "32201", "cdcd": "C01 - SUZANO MANUTENCAO AGUA CLARA", "cod": "32223", "eq": "C01 - V", "coord": 0, "serv": 3, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C01", "cdc": "32201", "cdcd": "C01 - SUZANO MANUTENCAO AGUA CLARA", "cod": "32224", "eq": "C01 - U", "coord": 0, "serv": 3, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C01", "cdc": "32701", "cdcd": "C01 - SUZANO PLANTIO AGUA CLARA", "cod": "32702", "eq": "C01 - K", "coord": 0, "serv": 31, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 2, "ct": 1, "ctr": 0, "cp": 0, "mot": 3, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C01", "cdc": "32701", "cdcd": "C01 - SUZANO PLANTIO AGUA CLARA", "cod": "32704", "eq": "C01 - C", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 1, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C01", "cdc": "32701", "cdcd": "C01 - SUZANO PLANTIO AGUA CLARA", "cod": "32705", "eq": "C01 - H", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 2, "te": 0, "esc": 0, "trat": 7, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 3, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32301", "eq": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "coord": 0, "serv": 0, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 2, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32302", "eq": "C07 - A", "coord": 0, "serv": 4, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32303", "eq": "C07 - B", "coord": 0, "serv": 0, "tl": 0, "tm": 5, "tp": 0, "te": 0, "esc": 0, "trat": 5, "ct": 1, "ctr": 0, "cp": 0, "mot": 2, "vl": 1, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32305", "eq": "C07 - D", "coord": 0, "serv": 0, "tl": 0, "tm": 3, "tp": 1, "te": 0, "esc": 0, "trat": 4, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32306", "eq": "C07 - E", "coord": 0, "serv": 0, "tl": 0, "tm": 4, "tp": 0, "te": 0, "esc": 0, "trat": 4, "ct": 0, "ctr": 0, "cp": 0, "mot": 1, "vl": 1, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32307", "eq": "C07 - F", "coord": 0, "serv": 3, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32313", "eq": "C07 - L", "coord": 0, "serv": 2, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 1, "vl": 1, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32314", "eq": "C07 - M", "coord": 0, "serv": 1, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 2, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32315", "eq": "C07 - N", "coord": 0, "serv": 2, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32316", "eq": "C07 - O", "coord": 0, "serv": 33, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32317", "eq": "C07 - P", "coord": 0, "serv": 28, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32318", "eq": "C07 - Q", "coord": 0, "serv": 4, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32320", "eq": "C07 - S", "coord": 0, "serv": 2, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32321", "eq": "C07 - Z", "coord": 0, "serv": 0, "tl": 0, "tm": 4, "tp": 0, "te": 0, "esc": 0, "trat": 4, "ct": 0, "ctr": 1, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32322", "eq": "C07 - APOIO 1", "coord": 0, "serv": 2, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 3, "ct": 3, "ctr": 4, "cp": 0, "mot": 5, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 2, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32324", "eq": "C07 - T", "coord": 0, "serv": 3, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32325", "eq": "C07 - U", "coord": 0, "serv": 2, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32326", "eq": "C07 - V", "coord": 0, "serv": 3, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32327", "eq": "C07 - W", "coord": 0, "serv": 2, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32328", "eq": "C07 - X", "coord": 0, "serv": 1, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32329", "eq": "C07 - Y", "coord": 0, "serv": 3, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32301", "cdcd": "C07 - SUZANO MANUTENCAO TRES LAGOAS", "cod": "32330", "eq": "C07 - RR", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 3, "te": 0, "esc": 0, "trat": 4, "ct": 0, "ctr": 1, "cp": 0, "mot": 1, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "cdc": "32801", "cdcd": "C07 - SUZANO PLANTIO TRES LAGOAS", "cod": "32801", "eq": "C07 - SUZANO PLANTIO TRES LAGOAS", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 1, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C22", "cdc": "32901", "cdcd": "C22 - TRES LAGOAS PLANTIO MEC", "cod": "32902", "eq": "C22 - A", "coord": 0, "serv": 14, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 4, "ct": 0, "ctr": 0, "cp": 0, "mot": 5, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C23", "cdc": "35001", "cdcd": "C23 - TRES LAGOAS IRRIG MEC", "cod": "35001", "eq": "C23 - TRES LAGOAS IRRIG MEC", "coord": 0, "serv": 0, "tl": 0, "tm": 1, "tp": 1, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 4, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C23", "cdc": "35001", "cdcd": "C23 - TRES LAGOAS IRRIG MEC", "cod": "35002", "eq": "C23 - A", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 5, "ct": 0, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "Sem contrato operacional", "cdc": "2021", "cdcd": "OFICINA AGUA CLARA", "cod": "2021", "eq": "OFICINA AGUA CLARA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 3, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "Sem contrato operacional", "cdc": "2022", "cdcd": "OFICINA TRES LAGOAS", "cod": "2022", "eq": "OFICINA TRES LAGOAS", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 6, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 1 }, { "reg": "NORTE", "rgl": "MS1", "con": "Sem contrato operacional", "cdc": "2120", "cdcd": "SSMA MS1", "cod": "2120", "eq": "SSMA MS1", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "Sem contrato operacional", "cdc": "2121", "cdcd": "SSMA AGUA CLARA", "cod": "2121", "eq": "SSMA AGUA CLARA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "Sem contrato operacional", "cdc": "2122", "cdcd": "SSMA TRES LAGOAS", "cod": "2122", "eq": "SSMA TRES LAGOAS", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "Sem contrato operacional", "cdc": "320", "cdcd": "GESTAO OP MS1", "cod": "320", "eq": "GESTAO OP MS1", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "Sem contrato operacional", "cdc": "32200", "cdcd": "GESTAO OP AGUA CLARA", "cod": "32200", "eq": "GESTAO OP AGUA CLARA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 3, "vm": 1, "oni": 0, "van": 0, "enc": 2, "sup": 2, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "Sem contrato operacional", "cdc": "32300", "cdcd": "GESTAO OP TRES LAGOAS", "cod": "32300", "eq": "GESTAO OP TRES LAGOAS", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 4, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 3, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "Sem contrato operacional", "cdc": "324", "cdcd": "QUALIDADE MS1", "cod": "324", "eq": "QUALIDADE MS1", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MT", "con": "C21", "cdc": "34201", "cdcd": "C21 - INPASA NOVA MUTUM", "cod": "34202", "eq": "C21 - A", "coord": 0, "serv": 66, "tl": 0, "tm": 0, "tp": 2, "te": 0, "esc": 0, "trat": 12, "ct": 0, "ctr": 1, "cp": 0, "mot": 9, "vl": 0, "vm": 2, "oni": 0, "van": 0, "enc": 6, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MT", "con": "C21", "cdc": "34201", "cdcd": "C21 - INPASA NOVA MUTUM", "cod": "34204", "eq": "C21 - C", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 4, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 4, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MT", "con": "Sem contrato operacional", "cdc": "2073", "cdcd": "OFICINA NOVA MUTUM", "cod": "2073", "eq": "OFICINA NOVA MUTUM", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 1, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MT", "con": "Sem contrato operacional", "cdc": "2191", "cdcd": "SSMA NOVA MUTUM", "cod": "2191", "eq": "SSMA NOVA MUTUM", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MT", "con": "Sem contrato operacional", "cdc": "340", "cdcd": "GESTAO OP MT", "cod": "340", "eq": "GESTAO OP MT", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 1, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 2, "oni": 0, "van": 0, "enc": 0, "sup": 1, "supo": 0 }, { "reg": "NORTE", "rgl": "MT", "con": "Sem contrato operacional", "cdc": "34200", "cdcd": "GESTAO OP NOVA MUTUM", "cod": "34200", "eq": "GESTAO OP NOVA MUTUM", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "Sem regional", "con": "Sem contrato operacional", "cdc": "30", "cdcd": "GESTAO OP NORTE", "cod": "30", "eq": "GESTAO OP NORTE", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 1 }, { "reg": "PROJETOS", "rgl": "DESENV. OP", "con": "Sem contrato operacional", "cdc": "710", "cdcd": "GESTAO DESENVOLVIMENTO OPERACIONAL", "cod": "710", "eq": "GESTAO DESENVOLVIMENTO OPERACIONAL", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 1, "supo": 1 }, { "reg": "PROJETOS", "rgl": "DESENV. OP", "con": "Sem contrato operacional", "cdc": "71101", "cdcd": "P02 - IRRIGACAO AUTOMATICA", "cod": "71101", "eq": "P02 - IRRIGACAO AUTOMATICA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 2, "te": 0, "esc": 0, "trat": 2, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "PROJETOS", "rgl": "DESENV. OP", "con": "Sem contrato operacional", "cdc": "71201", "cdcd": "P03 - CMAK", "cod": "71201", "eq": "P03 - CMAK", "coord": 0, "serv": 3, "tl": 0, "tm": 0, "tp": 3, "te": 0, "esc": 0, "trat": 3, "ct": 0, "ctr": 1, "cp": 0, "mot": 1, "vl": 3, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "PROJETOS", "rgl": "DESENV. OP", "con": "Sem contrato operacional", "cdc": "71301", "cdcd": "P04 - PLANTADEIRA AUTOMATICA JOHN DEERE", "cod": "71301", "eq": "P04 - PLANTADEIRA AUTOMATICA JOHN DEERE", "coord": 0, "serv": 9, "tl": 0, "tm": 0, "tp": 1, "te": 0, "esc": 0, "trat": 2, "ct": 0, "ctr": 1, "cp": 0, "mot": 1, "vl": 3, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C12", "cdc": "51201", "cdcd": "C12 - KLABIN IBAITI", "cod": "51201", "eq": "C12 - KLABIN IBAITI", "coord": 0, "serv": 0, "tl": 0, "tm": 4, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 5, "ctr": 2, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 7, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C12", "cdc": "51201", "cdcd": "C12 - KLABIN IBAITI", "cod": "51202", "eq": "C12 - B", "coord": 0, "serv": 23, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C12", "cdc": "51201", "cdcd": "C12 - KLABIN IBAITI", "cod": "51203", "eq": "C12 - C", "coord": 0, "serv": 22, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C12", "cdc": "51201", "cdcd": "C12 - KLABIN IBAITI", "cod": "51204", "eq": "C12 - D", "coord": 0, "serv": 20, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C12", "cdc": "51201", "cdcd": "C12 - KLABIN IBAITI", "cod": "51205", "eq": "C12 - E", "coord": 0, "serv": 30, "tl": 0, "tm": 0, "tp": 1, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 2, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C12", "cdc": "51201", "cdcd": "C12 - KLABIN IBAITI", "cod": "51207", "eq": "C12 - G", "coord": 0, "serv": 8, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C12", "cdc": "51201", "cdcd": "C12 - KLABIN IBAITI", "cod": "51208", "eq": "C12 - H", "coord": 0, "serv": 19, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C12", "cdc": "51201", "cdcd": "C12 - KLABIN IBAITI", "cod": "51209", "eq": "C12 - I", "coord": 0, "serv": 19, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C12", "cdc": "51201", "cdcd": "C12 - KLABIN IBAITI", "cod": "51211", "eq": "C12 - K", "coord": 0, "serv": 8, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C12", "cdc": "51201", "cdcd": "C12 - KLABIN IBAITI", "cod": "51213", "eq": "C12 - APOIO 1", "coord": 0, "serv": 3, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 6, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 1, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C12", "cdc": "51201", "cdcd": "C12 - KLABIN IBAITI", "cod": "51214", "eq": "C12 - M", "coord": 0, "serv": 21, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C14", "cdc": "52401", "cdcd": "C14 - KLABIN JAGUARIAIVA", "cod": "52401", "eq": "C14 - KLABIN JAGUARIAIVA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 3, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C14", "cdc": "52401", "cdcd": "C14 - KLABIN JAGUARIAIVA", "cod": "52403", "eq": "C14 - D", "coord": 0, "serv": 6, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C14", "cdc": "52401", "cdcd": "C14 - KLABIN JAGUARIAIVA", "cod": "52404", "eq": "C14 - E", "coord": 0, "serv": 26, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 2, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C14", "cdc": "52401", "cdcd": "C14 - KLABIN JAGUARIAIVA", "cod": "52407", "eq": "C14 - H", "coord": 0, "serv": 27, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C14", "cdc": "52401", "cdcd": "C14 - KLABIN JAGUARIAIVA", "cod": "52408", "eq": "C14 - I", "coord": 0, "serv": 22, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C14", "cdc": "52401", "cdcd": "C14 - KLABIN JAGUARIAIVA", "cod": "52409", "eq": "C14 - J", "coord": 0, "serv": 26, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C14", "cdc": "52401", "cdcd": "C14 - KLABIN JAGUARIAIVA", "cod": "52410", "eq": "C14 - K", "coord": 0, "serv": 8, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C14", "cdc": "52401", "cdcd": "C14 - KLABIN JAGUARIAIVA", "cod": "52417", "eq": "C14 - O", "coord": 0, "serv": 12, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 1, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C16", "cdc": "52301", "cdcd": "C16 - KLABIN ITAPIRAPUA", "cod": "52301", "eq": "C16 - KLABIN ITAPIRAPUA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C16", "cdc": "52301", "cdcd": "C16 - KLABIN ITAPIRAPUA", "cod": "52302", "eq": "C16 - A", "coord": 0, "serv": 24, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C16", "cdc": "52301", "cdcd": "C16 - KLABIN ITAPIRAPUA", "cod": "52303", "eq": "C16 - B", "coord": 0, "serv": 27, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C16", "cdc": "52301", "cdcd": "C16 - KLABIN ITAPIRAPUA", "cod": "52304", "eq": "C16 - C", "coord": 0, "serv": 27, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 2, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "Sem contrato operacional", "cdc": "2053", "cdcd": "OFICINA JAGUARIAIVA", "cod": "2053", "eq": "OFICINA JAGUARIAIVA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "Sem contrato operacional", "cdc": "2061", "cdcd": "OFICINA IBAITI", "cod": "2061", "eq": "OFICINA IBAITI", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "Sem contrato operacional", "cdc": "2150", "cdcd": "SSMA PR1", "cod": "2150", "eq": "SSMA PR1", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "Sem contrato operacional", "cdc": "2153", "cdcd": "SSMA JAGUARIAIVA", "cod": "2153", "eq": "SSMA JAGUARIAIVA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "Sem contrato operacional", "cdc": "2160", "cdcd": "SSMA PR2", "cod": "2160", "eq": "SSMA PR2", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 1 }, { "reg": "SUL", "rgl": "PR", "con": "Sem contrato operacional", "cdc": "2161", "cdcd": "SSMA IBAITI", "cod": "2161", "eq": "SSMA IBAITI", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "Sem contrato operacional", "cdc": "510", "cdcd": "GESTAO OP PR2", "cod": "510", "eq": "GESTAO OP PR2", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "Sem contrato operacional", "cdc": "51200", "cdcd": "GESTAO OP IBAITI", "cod": "51200", "eq": "GESTAO OP IBAITI", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 1, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "Sem contrato operacional", "cdc": "516", "cdcd": "QUALIDADE PR2", "cod": "516", "eq": "QUALIDADE PR2", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 1 }, { "reg": "SUL", "rgl": "PR", "con": "Sem contrato operacional", "cdc": "52400", "cdcd": "GESTAO OP JAGUARIAIVA", "cod": "52400", "eq": "GESTAO OP JAGUARIAIVA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 2, "vm": 2, "oni": 0, "van": 0, "enc": 0, "sup": 2, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "Sem contrato operacional", "cdc": "525", "cdcd": "QUALIDADE PR1", "cod": "525", "eq": "QUALIDADE PR1", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "C08", "cdc": "53201", "cdcd": "C08 - CMPC SAO GABRIEL MANUAL", "cod": "53201", "eq": "C08 - CMPC SAO GABRIEL MANUAL", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 1, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "C08", "cdc": "53201", "cdcd": "C08 - CMPC SAO GABRIEL MANUAL", "cod": "53202", "eq": "C08 - A", "coord": 0, "serv": 28, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "C08", "cdc": "53201", "cdcd": "C08 - CMPC SAO GABRIEL MANUAL", "cod": "53203", "eq": "C08 - B", "coord": 0, "serv": 26, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "C08", "cdc": "53201", "cdcd": "C08 - CMPC SAO GABRIEL MANUAL", "cod": "53204", "eq": "C08 - C", "coord": 0, "serv": 27, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "C08", "cdc": "53201", "cdcd": "C08 - CMPC SAO GABRIEL MANUAL", "cod": "53205", "eq": "C08 - D", "coord": 0, "serv": 27, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 1, "vl": 1, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "C08", "cdc": "53201", "cdcd": "C08 - CMPC SAO GABRIEL MANUAL", "cod": "53206", "eq": "C08 - E", "coord": 0, "serv": 27, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "C08", "cdc": "53201", "cdcd": "C08 - CMPC SAO GABRIEL MANUAL", "cod": "53212", "eq": "C08 - APOIO 1", "coord": 0, "serv": 1, "tl": 0, "tm": 0, "tp": 0, "te": 1, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 2, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "C08", "cdc": "53201", "cdcd": "C08 - CMPC SAO GABRIEL MANUAL", "cod": "53215", "eq": "C08 - M", "coord": 0, "serv": 8, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 1, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "C08", "cdc": "53201", "cdcd": "C08 - CMPC SAO GABRIEL MANUAL", "cod": "53220", "eq": "C08 - Q", "coord": 0, "serv": 30, "tl": 0, "tm": 1, "tp": 0, "te": 0, "esc": 0, "trat": 1, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 1, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "C08", "cdc": "53201", "cdcd": "C08 - CMPC SAO GABRIEL MANUAL", "cod": "53222", "eq": "C08 - LM", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 2, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "C08", "cdc": "53290", "cdcd": "C08 - CMPC SAO GABRIEL MECANIZADO", "cod": "53207", "eq": "C08 - F", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 6, "ct": 2, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 2, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "C08", "cdc": "53290", "cdcd": "C08 - CMPC SAO GABRIEL MECANIZADO", "cod": "53209", "eq": "C08 - H", "coord": 0, "serv": 0, "tl": 0, "tm": 4, "tp": 0, "te": 0, "esc": 0, "trat": 5, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "C08", "cdc": "53290", "cdcd": "C08 - CMPC SAO GABRIEL MECANIZADO", "cod": "53210", "eq": "C08 - I", "coord": 0, "serv": 0, "tl": 0, "tm": 4, "tp": 0, "te": 0, "esc": 0, "trat": 4, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "C08", "cdc": "53291", "cdcd": "C08 - CMPC SAO GABRIEL DRONE", "cod": "53216", "eq": "C08 - N", "coord": 0, "serv": 1, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "C08", "cdc": "53291", "cdcd": "C08 - CMPC SAO GABRIEL DRONE", "cod": "53221", "eq": "C08 - N1", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "C08", "cdc": "53292", "cdcd": "C08 - CMPC SAO GABRIEL LOGISTICA", "cod": "53219", "eq": "C08 - LO", "coord": 0, "serv": 1, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 2, "cp": 0, "mot": 3, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "Sem contrato operacional", "cdc": "2071", "cdcd": "OFICINA SAO GABRIEL", "cod": "2071", "eq": "OFICINA SAO GABRIEL", "coord": 0, "serv": 1, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 2, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 1 }, { "reg": "SUL", "rgl": "RS", "con": "Sem contrato operacional", "cdc": "2170", "cdcd": "SSMA RS", "cod": "2170", "eq": "SSMA RS", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "Sem contrato operacional", "cdc": "530", "cdcd": "GESTAO OP RS", "cod": "530", "eq": "GESTAO OP RS", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 3, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "Sem contrato operacional", "cdc": "533", "cdcd": "QUALIDADE RS", "cod": "533", "eq": "QUALIDADE RS", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUPORTE OPERACIONAL", "rgl": "Sem regional", "con": "Sem contrato operacional", "cdc": "2000", "cdcd": "GESTAO MANUTENCAO", "cod": "2000", "eq": "GESTAO MANUTENCAO", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 2, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "SUPORTE OPERACIONAL", "rgl": "Sem regional", "con": "Sem contrato operacional", "cdc": "2001", "cdcd": "OFICINA MATRIZ", "cod": "2001", "eq": "OFICINA MATRIZ", "coord": 0, "serv": 0, "tl": 0, "tm": 2, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 2, "ctr": 0, "cp": 0, "mot": 1, "vl": 1, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 1 }, { "reg": "SUPORTE OPERACIONAL", "rgl": "Sem regional", "con": "Sem contrato operacional", "cdc": "2100", "cdcd": "GESTAO SSMA", "cod": "2100", "eq": "GESTAO SSMA", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 1 }, { "reg": "SUPORTE OPERACIONAL", "rgl": "Sem regional", "con": "Sem contrato operacional", "cdc": "22", "cdcd": "MECANIZACAO", "cod": "22", "eq": "MECANIZACAO", "coord": 0, "serv": 0, "tl": 0, "tm": 5, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 3, "vm": 4, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }], "c": [{ "reg": "DESENVOLVIMENTO SOCIAL", "rgl": "Sem regional", "con": "Sem contrato operacional", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C02", "coord": 0, "serv": 338, "tl": 0, "tm": 40, "tp": 13, "te": 0, "esc": 0, "trat": 65, "ct": 13, "ctr": 25, "cp": 0, "mot": 42, "vl": 26, "vm": 5, "oni": 8, "van": 0, "enc": 16, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "C04", "coord": 0, "serv": 247, "tl": 0, "tm": 2, "tp": 0, "te": 0, "esc": 0, "trat": 4, "ct": 6, "ctr": 6, "cp": 0, "mot": 11, "vl": 4, "vm": 7, "oni": 0, "van": 0, "enc": 14, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP1", "con": "Sem contrato operacional", "coord": 2, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 2, "trat": 11, "ct": 2, "ctr": 0, "cp": 0, "mot": 0, "vl": 38, "vm": 2, "oni": 0, "van": 0, "enc": 3, "sup": 11, "supo": 1 }, { "reg": "LESTE", "rgl": "SP2", "con": "C03", "coord": 0, "serv": 224, "tl": 0, "tm": 45, "tp": 5, "te": 2, "esc": 0, "trat": 61, "ct": 13, "ctr": 18, "cp": 1, "mot": 21, "vl": 15, "vm": 7, "oni": 6, "van": 0, "enc": 14, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "C05", "coord": 0, "serv": 171, "tl": 0, "tm": 39, "tp": 4, "te": 0, "esc": 0, "trat": 50, "ct": 8, "ctr": 14, "cp": 1, "mot": 19, "vl": 20, "vm": 4, "oni": 5, "van": 1, "enc": 20, "sup": 0, "supo": 0 }, { "reg": "LESTE", "rgl": "SP2", "con": "Sem contrato operacional", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 2, "ctr": 0, "cp": 0, "mot": 0, "vl": 44, "vm": 1, "oni": 0, "van": 0, "enc": 3, "sup": 14, "supo": 4 }, { "reg": "LESTE", "rgl": "Sem regional", "con": "Sem contrato operacional", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C01", "coord": 0, "serv": 144, "tl": 0, "tm": 13, "tp": 3, "te": 0, "esc": 0, "trat": 23, "ct": 1, "ctr": 8, "cp": 2, "mot": 16, "vl": 2, "vm": 13, "oni": 4, "van": 0, "enc": 16, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C07", "coord": 0, "serv": 95, "tl": 0, "tm": 18, "tp": 5, "te": 0, "esc": 0, "trat": 24, "ct": 8, "ctr": 6, "cp": 0, "mot": 11, "vl": 3, "vm": 20, "oni": 2, "van": 0, "enc": 20, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C22", "coord": 0, "serv": 14, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 4, "ct": 0, "ctr": 0, "cp": 0, "mot": 5, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 1, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "C23", "coord": 0, "serv": 0, "tl": 0, "tm": 1, "tp": 1, "te": 0, "esc": 0, "trat": 5, "ct": 1, "ctr": 4, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MS1", "con": "Sem contrato operacional", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 22, "vm": 3, "oni": 0, "van": 0, "enc": 3, "sup": 5, "supo": 1 }, { "reg": "NORTE", "rgl": "MT", "con": "C21", "coord": 0, "serv": 66, "tl": 0, "tm": 0, "tp": 6, "te": 0, "esc": 0, "trat": 12, "ct": 1, "ctr": 5, "cp": 0, "mot": 9, "vl": 0, "vm": 2, "oni": 0, "van": 0, "enc": 6, "sup": 0, "supo": 0 }, { "reg": "NORTE", "rgl": "MT", "con": "Sem contrato operacional", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 2, "te": 0, "esc": 0, "trat": 0, "ct": 1, "ctr": 0, "cp": 0, "mot": 0, "vl": 1, "vm": 2, "oni": 0, "van": 0, "enc": 0, "sup": 1, "supo": 0 }, { "reg": "NORTE", "rgl": "Sem regional", "con": "Sem contrato operacional", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 0, "vm": 1, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 1 }, { "reg": "PROJETOS", "rgl": "DESENV. OP", "con": "Sem contrato operacional", "coord": 0, "serv": 12, "tl": 0, "tm": 0, "tp": 6, "te": 0, "esc": 0, "trat": 7, "ct": 0, "ctr": 2, "cp": 0, "mot": 2, "vl": 8, "vm": 1, "oni": 0, "van": 0, "enc": 2, "sup": 1, "supo": 1 }, { "reg": "SUL", "rgl": "PR", "con": "C12", "coord": 0, "serv": 173, "tl": 0, "tm": 4, "tp": 1, "te": 0, "esc": 0, "trat": 7, "ct": 5, "ctr": 2, "cp": 0, "mot": 8, "vl": 1, "vm": 1, "oni": 8, "van": 0, "enc": 7, "sup": 1, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C14", "coord": 0, "serv": 127, "tl": 0, "tm": 3, "tp": 0, "te": 0, "esc": 0, "trat": 4, "ct": 4, "ctr": 4, "cp": 0, "mot": 4, "vl": 1, "vm": 0, "oni": 3, "van": 0, "enc": 4, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "C16", "coord": 0, "serv": 78, "tl": 0, "tm": 3, "tp": 0, "te": 0, "esc": 0, "trat": 4, "ct": 1, "ctr": 0, "cp": 0, "mot": 1, "vl": 0, "vm": 0, "oni": 3, "van": 0, "enc": 3, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "PR", "con": "Sem contrato operacional", "coord": 0, "serv": 0, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 9, "vm": 3, "oni": 0, "van": 0, "enc": 2, "sup": 3, "supo": 2 }, { "reg": "SUL", "rgl": "RS", "con": "C08", "coord": 0, "serv": 176, "tl": 0, "tm": 11, "tp": 1, "te": 1, "esc": 0, "trat": 19, "ct": 8, "ctr": 3, "cp": 0, "mot": 8, "vl": 2, "vm": 6, "oni": 6, "van": 0, "enc": 12, "sup": 0, "supo": 0 }, { "reg": "SUL", "rgl": "RS", "con": "Sem contrato operacional", "coord": 0, "serv": 1, "tl": 0, "tm": 0, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 0, "ctr": 0, "cp": 0, "mot": 0, "vl": 6, "vm": 2, "oni": 0, "van": 0, "enc": 1, "sup": 3, "supo": 1 }, { "reg": "SUPORTE OPERACIONAL", "rgl": "Sem regional", "con": "Sem contrato operacional", "coord": 0, "serv": 0, "tl": 0, "tm": 7, "tp": 0, "te": 0, "esc": 0, "trat": 0, "ct": 3, "ctr": 0, "cp": 0, "mot": 1, "vl": 6, "vm": 6, "oni": 0, "van": 0, "enc": 0, "sup": 0, "supo": 2 }] };
+        const $ = s => document.querySelector(s);
+        const fmt = n => n.toLocaleString('pt-BR');
+        const pl = (n, s, p) => `${fmt(n)} ${n === 1 ? s : p}`;
+        const KEYS = ['coord', 'serv', 'tl', 'tm', 'tp', 'te', 'esc', 'trat', 'ct', 'ctr', 'cp', 'mot', 'vl', 'vm', 'van', 'oni', 'enc', 'sup', 'supo'];
+        const sum = rows => { const o = {}; KEYS.forEach(k => o[k] = 0); rows.forEach(r => KEYS.forEach(k => o[k] += r[k])); return o; };
+        const der = r => ({
+            trTot: r.tl + r.tm + r.tp, caOp: r.ct + r.ctr, caAp: r.cp, vei: r.vl + r.vm + r.van, supT: r.sup + r.supo
+        });
+        const opTotal = r => { const d = der(r); return r.coord + r.serv + d.trTot + r.te + r.esc + r.trat + d.caOp + d.caAp + r.mot + d.vei + r.oni + r.enc + d.supT; };
+        const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+        const isApoio = n => /apoio/i.test(n);
+        const IC = {
+            coord: '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+            serv: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+            trator: '<path d="m10 11 11 .9a1 1 0 0 1 .8 1.1l-.665 4.158a1 1 0 0 1-.988.842H20"/><path d="M16 18h-5"/><path d="M18 5a1 1 0 0 0-1 1v5.573"/><path d="M3 4h8.129a1 1 0 0 1 .99.863L13 11.246"/><path d="M4 11V4"/><path d="M8 10.1V4"/><circle cx="18" cy="18" r="2"/><circle cx="7" cy="15" r="5"/>',
+            pessoa: '<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+            caminhao: '<path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/>',
+            prancha: '<path d="M2 14h20"/><path d="M4 14V9h6v5"/><path d="M14 11h6"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M8 18h7"/>',
+            volante: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/><path d="M12 14v8"/><path d="M10 12H2.2"/><path d="M14 12h7.8"/>',
+            carro: '<path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/>',
+            onibus: '<path d="M8 6v6"/><path d="M15 6v6"/><path d="M2 12h19.6"/><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"/><circle cx="7" cy="18" r="2"/><path d="M9 18h5"/><circle cx="16" cy="18" r="2"/>',
+            enc: '<rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/>',
+            sup: '<path d="M10 10V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5"/><path d="M14 6a6 6 0 0 1 6 6v3"/><path d="M4 15v-3a6 6 0 0 1 6-6"/><rect x="2" y="15" width="20" height="4" rx="1"/>',
+            chave: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>'
+        };
+        const ic = (n, cls = 'i') => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]}</svg>`;
+        const C = i => `--c:var(--c${i});--s:var(--c${i}s)`;
+
+        function ribbon(el, r) {
+            const d = der(r);
+            const items = [
+                [1, 'coord', r.coord, 'Coordenadores', ''],
+                [2, 'serv', r.serv, 'Serventes', ''],
+                [3, 'trator', d.trTot, 'Tratores', `L ${r.tl} · M ${r.tm} · P ${r.tp}<br>${r.trat} tratoristas`],
+                [4, 'caminhao', d.caOp + d.caAp, 'Caminhões', `${d.caOp} operação · ${d.caAp} apoio<br>${r.mot} motoristas`],
+                [5, 'carro', d.vei, 'Veículos nas frentes', `${r.vl} leves · ${r.vm} médios${r.van ? ` · ${r.van} van` : ''}`],
+                [6, 'onibus', r.oni, 'Ônibus', ''],
+                [7, 'enc', r.enc, 'Encarregados', ''],
+                [8, 'sup', d.supT, 'Supervisores', `${r.sup} operacionais · ${r.supo} outras áreas`]
+            ];
+            el.innerHTML = items.map(([i, icn, v, l, s]) => `<div class="tile" style="${C(i)}"><div class="ib">${ic(icn)}</div><b>${fmt(v)}</b><span>${l}</span>${s ? `<small>${s}</small>` : ''}</div>`).join('');
+        }
+
+        /* ---------- Por equipe ---------- */
+        const uniq = (arr) => [...new Set(arr)];
+        /* remove clientes excluídos da visão (Eucatex e CMPC) e recalcula a aba por contrato */
+        const EXCLUIR = /EUCATEX|CMPC/i;
+        const EXCLUIR_REGIOES = ['NORTE'];
+        D.e = D.e.filter(r => !EXCLUIR.test(r.cdcd) && !EXCLUIR.test(r.eq) && !EXCLUIR_REGIOES.includes(r.reg));
+        D.c = D.c.map(c => {
+            const rows = D.e.filter(r => r.reg === c.reg && r.rgl === c.rgl && r.con === c.con);
+            return rows.length ? Object.assign({ reg: c.reg, rgl: c.rgl, con: c.con }, sum(rows)) : null;
+        }).filter(Boolean);
+        /* remove CDCs sem nenhum dos indicadores */
+        (() => {
+            const tot = {};
+            D.e.forEach(r => { const k = r.reg + '|' + r.rgl + '|' + r.cdc; tot[k] = (tot[k] || 0) + opTotal(r); });
+            D.e = D.e.filter(r => tot[r.reg + '|' + r.rgl + '|' + r.cdc] > 0);
+        })();
+        function fillSelect(sel, vals, keep) {
+            const cur = keep ? sel.value : '';
+            sel.innerHTML = '<option value="">Todas</option>' + vals.map(v => `<option>${esc(v)}</option>`).join('');
+            if (vals.includes(cur)) sel.value = cur;
+        }
+        const fReg = $('#f-reg'), fRgl = $('#f-rgl'), fCon = $('#f-con'), fQ = $('#f-q');
+        fillSelect(fReg, uniq(D.e.map(r => r.reg)));
+        function cascade() {
+            const a = D.e.filter(r => !fReg.value || r.reg === fReg.value);
+            fillSelect(fRgl, uniq(a.map(r => r.rgl)), true);
+            const b = a.filter(r => !fRgl.value || r.rgl === fRgl.value);
+            const cons = uniq(b.map(r => r.con)).sort((x, y) => (x.startsWith('Sem')) - (y.startsWith('Sem')) || x.localeCompare(y));
+            fillSelect(fCon, cons, true);
+        }
+
+        function mini(i, icn, label, val, sub, wide) {
+            return `<div class="m${val ? '' : ' z'}${wide ? ' wide' : ''}" style="${C(i)}"><div class="ib">${ic(icn)}</div><div><b>${fmt(val)}</b><span>${label}</span>${sub ? `<small>${sub}</small>` : ''}</div></div>`;
+        }
+        function teamCard(t) {
+            const d = der(t);
+            const extraTr = [t.te ? `${t.te} esteira` : '', t.esc ? `${t.esc} escav.` : ''].filter(Boolean).join(' · ');
+            return `<article class="team${isApoio(t.eq) ? ' apoio' : ''}">
+    <div class="team-h"><div><h3>${esc(t.eq)}</h3><div class="code">Equipe ${esc(t.cod)}</div></div>${isApoio(t.eq) ? `<span class="tag">${ic('chave', 'ti')}Apoio</span>` : ''}</div>
+    <div class="mini">
+      ${mini(1, 'coord', 'Coordenadores', t.coord)}
+      ${mini(2, 'serv', 'Serventes', t.serv)}
+      ${mini(3, 'trator', 'Tratores', d.trTot, `Leves ${t.tl} · Médios ${t.tm} · Pesados ${t.tp}${extraTr ? '<br>' + extraTr : ''}`)}
+      ${mini(3, 'pessoa', 'Tratoristas', t.trat)}
+      ${mini(4, 'caminhao', 'Caminhões operação', d.caOp, `Toco ${t.ct} · Truck ${t.ctr}`)}
+      ${mini(4, 'prancha', 'Caminhões apoio', d.caAp, 'Prancha')}
+      ${mini(4, 'volante', 'Motoristas', t.mot)}
+      ${mini(5, 'carro', 'Veículos nas frentes', d.vei, `Leves ${t.vl} · Médios ${t.vm}${t.van ? ' · Van ' + t.van : ''}`)}
+      ${mini(6, 'onibus', 'Ônibus', t.oni)}
+      ${mini(7, 'enc', 'Encarregados', t.enc)}
+      ${mini(8, 'sup', 'Supervisores', d.supT, `Operacionais ${t.sup} · Outras áreas ${t.supo}`, true)}
+    </div></article>`;
+        }
+        function strip(r) {
+            const d = der(r);
+            const it = [[1, r.coord, 'Coord.', 'coord'], [2, r.serv, 'Serventes', 'serv'], [3, d.trTot, 'Tratores', 'trator'], [4, d.caOp + d.caAp, 'Caminhões', 'caminhao'], [5, d.vei, 'Veículos', 'carro'], [6, r.oni, 'Ônibus', 'onibus'], [7, r.enc, 'Encarreg.', 'enc'], [8, d.supT, 'Superv.', 'sup']];
+            return `<div class="strip">${it.map(([i, v, l, n]) => `<div class="pill${v ? '' : ' z'}" style="${C(i)}">${ic(n, 'pi')}<div><b>${fmt(v)}</b><span>${l}</span></div></div>`).join('')}</div>`;
+        }
+        const openSet = new Set();
+        function syncFilterUI() {
+            [fReg, fRgl, fCon].forEach(s => s.classList.toggle('on', !!s.value));
+            $('#b-clear').disabled = !(fReg.value || fRgl.value || fCon.value || fQ.value);
+        }
+        function renderEq() {
+            syncFilterUI();
+            const q = fQ.value.trim().toLowerCase();
+            let rows = D.e.filter(r => (!fReg.value || r.reg === fReg.value) && (!fRgl.value || r.rgl === fRgl.value) && (!fCon.value || r.con === fCon.value));
+            if (q) rows = rows.filter(r => (r.eq + ' ' + r.cod + ' ' + r.cdc + ' ' + r.cdcd).toLowerCase().includes(q));
+            ribbon($('#rib-eq'), sum(rows));
+            const cdcs = new Map();
+            rows.forEach(r => { const k = r.reg + '|' + r.rgl + '|' + r.cdc; if (!cdcs.has(k)) cdcs.set(k, []); cdcs.get(k).push(r); });
+            $('#cnt').textContent = `${pl(cdcs.size, 'CDC', 'CDCs')} · ${pl(rows.length, 'equipe', 'equipes')}`;
+            if (!rows.length) { $('#list').innerHTML = '<p class="empty">Nenhuma equipe corresponde aos filtros. Limpe a busca ou escolha outra região.</p>'; return; }
+            let html = '', lastReg = '';
+            const regCount = {}; rows.forEach(r => regCount[r.reg] = (regCount[r.reg] || 0) + 1);
+            for (const [k, ts] of cdcs) {
+                const f = ts[0];
+                if (f.reg !== lastReg) { html += `<h2 class="region">${esc(f.reg)} <em>${regCount[f.reg]} equipes</em></h2>`; lastReg = f.reg; }
+                const open = openSet.has(k) || (q && ts.length) ? ' open' : '';
+                html += `<details class="cdc" data-k="${esc(k)}"${open}><summary>
+      <div class="cdc-id"><span class="chev" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M7 4l6 6-6 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div><div class="cdc-name">${esc(f.cdcd)}</div><div class="cdc-meta">CDC ${esc(f.cdc)} · ${esc(f.rgl)} · ${esc(f.con)} · ${ts.length} equipe${ts.length > 1 ? 's' : ''}</div></div></div>
+      ${strip(sum(ts))}</summary>
+      <div class="teams">${ts.map(teamCard).join('')}</div></details>`;
+            }
+            $('#list').innerHTML = html;
+            document.querySelectorAll('details.cdc').forEach(d => d.addEventListener('toggle', () => d.open ? openSet.add(d.dataset.k) : openSet.delete(d.dataset.k)));
+        }
+        fReg.onchange = () => { cascade(); renderEq(); };
+        fRgl.onchange = () => { cascade(); renderEq(); };
+        fCon.onchange = renderEq; fQ.oninput = renderEq;
+        $('#b-clear').onclick = () => { fReg.value = ''; cascade(); fRgl.value = ''; cascade(); fCon.value = ''; fQ.value = ''; renderEq(); };
+        $('#b-open').onclick = () => document.querySelectorAll('details.cdc').forEach(d => d.open = true);
+        $('#b-close').onclick = () => document.querySelectorAll('details.cdc').forEach(d => d.open = false);
+
+        /* ---------- Por contrato ---------- */
+        const COLS = [
+            ['Coord.', r => r.coord, 'Coordenadores', 1, '', 1],
+            ['Serventes', r => r.serv, 'Serventes', 1, '', 2],
+            ['Leves', r => r.tl, 'Tratores', 5, '', 3], ['Médios', r => r.tm, 0, 0, '', 3], ['Pesados', r => r.tp, 0, 0, '', 3], ['Total', r => der(r).trTot, null, 0, 'tot', 3], ['Tratoristas', r => r.trat, 0, 0, '', 3],
+            ['Operação', r => der(r).caOp, 'Caminhões', 3, '', 4], ['Apoio', r => r.cp, 0, 0, '', 4], ['Motoristas', r => r.mot, 0, 0, '', 4],
+            ['Leves', r => r.vl, 'Veículos nas frentes', 4, '', 5], ['Médios', r => r.vm, 0, 0, '', 5], ['Vans', r => r.van, 0, 0, '', 5], ['Total', r => der(r).vei, null, 0, 'tot', 5],
+            ['Ônibus', r => r.oni, 'Ônibus', 1, '', 6],
+            ['Encarreg.', r => r.enc, 'Encarregados', 1, '', 7],
+            ['Operac.', r => r.sup, 'Supervisores', 3, '', 8], ['Outras áreas', r => r.supo, 0, 0, '', 8], ['Total', r => der(r).supT, null, 0, 'tot', 8],
+        ];
+        function cells(r) {
+            let start = true;
+            return COLS.map(c => { const v = c[1](r); const cl = [c[4] || '', v ? '' : 'z'].filter(Boolean).join(' '); return `<td class="${cl}">${fmt(v)}</td>`; }).join('');
+        }
+        function renderCon() {
+            ribbon($('#rib-con'), sum(D.c));
+            const nCon = uniq(D.c.filter(r => !r.con.startsWith('Sem')).map(r => r.con)).length;
+            const nCdc = uniq(D.e.map(r => r.reg + '|' + r.rgl + '|' + r.cdc)).length;
+            $('#cnt-con').textContent = `${pl(nCon, 'contrato', 'contratos')} · ${pl(nCdc, 'CDC', 'CDCs')} · ${pl(D.e.length, 'equipe', 'equipes')}`;
+            let h = '<thead><tr><th class="l" rowspan="2">Contrato</th>' + COLS.filter(c => c[2]).map(c => c[3] > 1 ? `<th class="grp" style="${C(c[5])}" colspan="${c[3]}">${c[2]}</th>` : `<th class="grp" style="${C(c[5])};vertical-align:bottom" rowspan="2">${c[0]}</th>`).join('') + '</tr><tr>';
+            h += COLS.filter(c => !(c[2] && c[3] === 1)).map(c => `<th class="subh" style="${C(c[5])}">${c[0]}</th>`).join('') + '</tr></thead><tbody>';
+            const regs = uniq(D.c.map(r => r.reg));
+            regs.forEach(reg => {
+                const rr = D.c.filter(r => r.reg === reg);
+                h += `<tr class="reg"><td colspan="${COLS.length + 1}">${esc(reg)}</td></tr>`;
+                uniq(rr.map(r => r.rgl)).forEach(rgl => {
+                    rr.filter(r => r.rgl === rgl).forEach(r => {
+                        h += `<tr class="row" tabindex="0" data-reg="${esc(r.reg)}" data-rgl="${esc(r.rgl)}" data-con="${esc(r.con)}"><td class="l"><span class="con">${esc(r.con)}</span> <span style="color:var(--muted)">${esc(r.rgl)}</span></td>${cells(r)}</tr>`;
+                    });
+                });
+                if (rr.length > 1) h += `<tr class="sub"><td class="l">Total ${esc(reg)}</td>${cells(sum(rr))}</tr>`;
+            });
+            h += `</tbody><tfoot><tr><td class="l">Total geral</td>${cells(sum(D.c))}</tr></tfoot>`;
+            const t = $('#tbl'); t.innerHTML = h;
+            t.querySelectorAll('tr.row').forEach(tr => {
+                const go = () => { fReg.value = tr.dataset.reg; cascade(); fRgl.value = tr.dataset.rgl; cascade(); fCon.value = tr.dataset.con; fQ.value = ''; renderEq(); show('eq'); window.scrollTo({ top: 0 }); };
+                tr.onclick = go; tr.onkeydown = e => { if (e.key === 'Enter') go(); };
+            });
+        }
+
+
+        /* ---------- Resumo ---------- */
+        function rv(n, label, val, sub) {
+            return `<div class="rv${val ? '' : ' z'}"><div class="lb">${ic(n, 'x')}${label}</div><b>${fmt(val)}</b>${sub ? `<small>${sub}</small>` : ''}</div>`;
+        }
+        function resCard(title, meta, r, semc) {
+            const d = der(r);
+            return `<article class="rc${semc ? ' semc' : ''}"><div class="rc-h"><h3>${esc(title)}</h3><span>${meta}</span></div><div class="rc-g">
+    ${rv('coord', 'Coord.', r.coord)}
+    ${rv('serv', 'Serventes', r.serv)}
+    ${rv('trator', 'Tratores', d.trTot, `M ${r.tm} · P ${r.tp}${r.tl ? ' · L ' + r.tl : ''}`)}
+    ${rv('pessoa', 'Tratoristas', r.trat)}
+    ${rv('caminhao', 'Caminhões', d.caOp + d.caAp, `${d.caOp} op. · ${d.caAp} apoio`)}
+    ${rv('volante', 'Motoristas', r.mot)}
+    ${rv('carro', 'Veículos', d.vei, `${r.vl} L · ${r.vm} M${r.van ? ' · ' + r.van + ' van' : ''}`)}
+    ${rv('onibus', 'Ônibus', r.oni)}
+    ${rv('enc', 'Encarreg.', r.enc)}
+    ${rv('sup', 'Superv.', d.supT, `${r.sup} op. · ${r.supo} outras`)}
+  </div></article>`;
+        }
+        function renderRes() {
+            ribbon($('#rib-res'), sum(D.e));
+            let h = '';
+            uniq(D.e.map(r => r.reg)).forEach(reg => {
+                const rr = D.e.filter(r => r.reg === reg);
+                const tot = sum(rr), dt = der(tot);
+                const nCdc = uniq(rr.map(r => r.rgl + '|' + r.cdc)).length;
+                h += `<section class="rs-reg"><div class="rs-head"><h2>${esc(reg)}</h2><p>${pl(nCdc, 'CDC', 'CDCs')} · ${pl(rr.length, 'equipe', 'equipes')} · <b>${fmt(tot.serv)}</b> serventes · <b>${fmt(dt.trTot)}</b> tratores · <b>${fmt(dt.caOp + dt.caAp)}</b> caminhões · <b>${fmt(dt.vei)}</b> veículos · <b>${fmt(tot.oni)}</b> ônibus</p></div><div class="rs-grid">`;
+                const groups = [];
+                uniq(rr.map(r => r.rgl + '|' + r.con)).forEach(k => { const [rgl, con] = k.split('|'); groups.push({ rgl, con, rows: rr.filter(r => r.rgl === rgl && r.con === con) }); });
+                groups.sort((a, b) => a.con.startsWith('Sem') - b.con.startsWith('Sem') || a.rgl.localeCompare(b.rgl) || a.con.localeCompare(b.con));
+                groups.forEach(g => {
+                    const semc = g.con.startsWith('Sem');
+                    const nc = uniq(g.rows.map(r => r.cdc)).length;
+                    const meta = `${g.rgl === 'Sem regional' ? '' : esc(g.rgl) + ' · '}${pl(nc, 'CDC', 'CDCs')} · ${pl(g.rows.length, 'equipe', 'equipes')}`;
+                    h += resCard(semc ? 'Sem contrato operacional' : g.con, meta, sum(g.rows), semc);
+                });
+                h += '</div></section>';
+            });
+            $('#res').innerHTML = h;
+        }
+
+        /* ---------- tabs ---------- */
+        function show(which) {
+            ['eq', 'con', 'res'].forEach(k => { $('#t-' + k).setAttribute('aria-selected', which === k); $('#p-' + k).hidden = which !== k; });
+        }
+        $('#t-eq').onclick = () => show('eq'); $('#t-con').onclick = () => show('con'); $('#t-res').onclick = () => show('res');
+
+        cascade(); renderEq(); renderCon(); renderRes();
+    </script>
+</body>
+
+</html>
