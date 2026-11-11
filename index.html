@@ -6,6 +6,8 @@
     <meta name="color-scheme" content="only light">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Estrutura operacional · Outubro 2026</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23095550'/%3E%3Cg fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' transform='translate(4 4)'%3E%3Cpath d='m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3a1 1 0 0 1-.8 1.7H15l3 3.3a1 1 0 0 1-.7 1.7H17Z'/%3E%3Cpath d='M12 22v-3'/%3E%3C/g%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
@@ -1040,6 +1042,220 @@
             color: var(--zero)
         }
 
+        /*unused*/
+        .ap-cat {
+            margin: 18px 0 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--brand-ink);
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .ap-cat span {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--brand);
+            background: var(--brand-soft);
+            border-radius: 999px;
+            padding: 1px 8px
+        }
+
+        .ap-wrap {
+            margin: 0 0 8px
+        }
+
+        .rt {
+            display: grid;
+            grid-template-columns: repeat(10, minmax(0, 1fr));
+            background: var(--brand-soft);
+            border-radius: 12px;
+            margin: 0 0 14px;
+            overflow: hidden
+        }
+
+        .rt-c {
+            padding: 10px 12px 11px;
+            border-left: 1px solid rgba(9, 85, 80, .12);
+            min-width: 0
+        }
+
+        .rt-c:first-child {
+            border-left: 0
+        }
+
+        .rt-l {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11.5px;
+            color: var(--brand-ink);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .rt-l svg {
+            width: 14px;
+            height: 14px;
+            color: var(--brand);
+            flex: none
+        }
+
+        .rt-c b {
+            display: block;
+            font-size: 21px;
+            font-weight: 700;
+            color: var(--brand);
+            line-height: 1.15;
+            margin-top: 4px
+        }
+
+        .rt-c small {
+            display: block;
+            font-size: 10.5px;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .rt-c.z b,
+        .rt-c.z .rt-l svg {
+            color: #9DB8B4
+        }
+
+        @media (max-width:1000px) {
+            .rt {
+                grid-template-columns: repeat(5, minmax(0, 1fr))
+            }
+
+            .rt-c:nth-child(5n+1) {
+                border-left: 0
+            }
+
+            .rt-c:nth-child(n+6) {
+                border-top: 1px solid rgba(9, 85, 80, .12)
+            }
+        }
+
+        @media (max-width:520px) {
+            .rt {
+                grid-template-columns: repeat(2, minmax(0, 1fr))
+            }
+
+            .rt-c {
+                border-left: 0 !important;
+                border-top: 1px solid rgba(9, 85, 80, .12)
+            }
+
+            .rt-c:nth-child(-n+2) {
+                border-top: 0
+            }
+
+            .rt-c:nth-child(even) {
+                border-left: 1px solid rgba(9, 85, 80, .12) !important
+            }
+        }
+
+        .rg-wrap {
+            margin: 16px 0 0;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            overflow-x: auto;
+            background: var(--surface)
+        }
+
+        .rg-tbl {
+            min-width: 980px;
+            font-size: 13.5px
+        }
+
+        .rg-tbl th {
+            background: var(--brand-soft);
+            color: var(--brand-ink);
+            font-weight: 500;
+            font-size: 12px;
+            padding: 8px 10px
+        }
+
+        .rg-tbl th.l {
+            background: var(--brand);
+            color: #fff;
+            font-size: 12.5px;
+            font-weight: 600
+        }
+
+        .rg-tbl td {
+            padding: 9px 10px
+        }
+
+        .rg-tbl td small {
+            display: block;
+            font-size: 10.5px;
+            color: var(--muted);
+            font-weight: 400
+        }
+
+        .rg-tbl tbody tr {
+            cursor: pointer
+        }
+
+        .rg-tbl tbody tr:hover td {
+            background: var(--brand-soft)
+        }
+
+        .rg-tbl tbody tr.sel td {
+            background: var(--brand-soft)
+        }
+
+        .rg-tbl td.rn {
+            font-weight: 600;
+            color: var(--brand)
+        }
+
+        .rg-tbl tfoot td {
+            background: var(--brand);
+            color: #fff;
+            font-weight: 600
+        }
+
+        .rg-tbl tfoot td small {
+            color: #CFE3E0
+        }
+
+        .ap-tbl {
+            min-width: 860px
+        }
+
+        .ap-tbl thead th.l {
+            background: var(--brand);
+            color: #fff
+        }
+
+        .ap-tbl thead th.subh {
+            background: var(--brand);
+            color: #fff;
+            font-weight: 500
+        }
+
+        .ap-tbl tr.reg td {
+            font-size: 13.5px;
+            padding-top: 12px;
+            color: var(--brand-ink)
+        }
+
+        .ap-n {
+            font-size: 11.5px;
+            font-weight: 500;
+            color: var(--brand);
+            background: var(--brand-soft);
+            border-radius: 999px;
+            padding: 1px 8px;
+            margin-left: 6px
+        }
+
         [hidden] {
             display: none !important
         }
@@ -1065,6 +1281,8 @@
                         equipe</button>
                     <button class="tab" role="tab" id="t-con" aria-selected="false" aria-controls="p-con">Por
                         contrato</button>
+                    <button class="tab" role="tab" id="t-ap" aria-selected="false" aria-controls="p-ap">Equipes de
+                        apoio</button>
                     <button class="tab" role="tab" id="t-res" aria-selected="false"
                         aria-controls="p-res">Resumo</button>
                 </div>
@@ -1074,7 +1292,6 @@
     <div class="wrap">
 
         <section id="p-eq" role="tabpanel" aria-labelledby="t-eq">
-            <div class="ribbon" id="rib-eq"></div>
             <div class="filters">
                 <div class="f-row">
                     <label class="fld fld-q"><span>Buscar</span>
@@ -1100,6 +1317,15 @@
             <div id="list"></div>
         </section>
 
+        <section id="p-ap" role="tabpanel" aria-labelledby="t-ap" hidden>
+            <div class="ribbon" id="rib-ap"></div>
+            <div class="con-bar"><span class="count" id="cnt-ap"></span>
+                <p class="hint">Equipes cujo nome não começa com o código de contrato (C + número): oficinas, SSMA,
+                    gestão, qualidade, projetos e afins.</p>
+            </div>
+            <div id="ap"></div>
+        </section>
+
         <section id="p-res" role="tabpanel" aria-labelledby="t-res" hidden>
             <div class="ribbon" id="rib-res"></div>
             <div id="res"></div>
@@ -1122,8 +1348,7 @@
                 <path d="M12 8h.01" />
             </svg><span>Caminhões de operação somam toco e truck; caminhões de apoio são as pranchas. A planilha não
                 traz uma classificação separada para comboio, então eventuais comboios estão contados como toco ou
-                truck. Veículos nas frentes somam veículos leves, médios e vans. Equipes com "Apoio" no nome aparecem
-                destacadas.</span></p>
+                truck. Veículos nas frentes somam veículos leves, médios e vans.</span></p>
     </div>
 
     <script>
@@ -1138,7 +1363,7 @@
         });
         const opTotal = r => { const d = der(r); return r.coord + r.serv + d.trTot + r.te + r.esc + r.trat + d.caOp + d.caAp + r.mot + d.vei + r.oni + r.enc + d.supT; };
         const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-        const isApoio = n => /apoio/i.test(n);
+        const isApoio = n => false;
         const IC = {
             coord: '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
             serv: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
@@ -1177,6 +1402,10 @@
         const EXCLUIR = /EUCATEX|CMPC/i;
         const EXCLUIR_REGIOES = ['NORTE'];
         D.e = D.e.filter(r => !EXCLUIR.test(r.cdcd) && !EXCLUIR.test(r.eq) && !EXCLUIR_REGIOES.includes(r.reg));
+        /* separa equipes de apoio: nome que não começa com C + número */
+        const EH_OPERACAO = n => /^\s*C\d+/i.test(n);
+        D.ap = D.e.filter(r => !EH_OPERACAO(r.eq));
+        D.e = D.e.filter(r => EH_OPERACAO(r.eq));
         D.c = D.c.map(c => {
             const rows = D.e.filter(r => r.reg === c.reg && r.rgl === c.rgl && r.con === c.con);
             return rows.length ? Object.assign({ reg: c.reg, rgl: c.rgl, con: c.con }, sum(rows)) : null;
@@ -1186,6 +1415,7 @@
             const tot = {};
             D.e.forEach(r => { const k = r.reg + '|' + r.rgl + '|' + r.cdc; tot[k] = (tot[k] || 0) + opTotal(r); });
             D.e = D.e.filter(r => tot[r.reg + '|' + r.rgl + '|' + r.cdc] > 0);
+            D.ap = D.ap.filter(r => opTotal(r) > 0);
         })();
         function fillSelect(sel, vals, keep) {
             const cur = keep ? sel.value : '';
@@ -1230,6 +1460,22 @@
             return `<div class="strip">${it.map(([i, v, l, n]) => `<div class="pill${v ? '' : ' z'}" style="${C(i)}">${ic(n, 'pi')}<div><b>${fmt(v)}</b><span>${l}</span></div></div>`).join('')}</div>`;
         }
         const openSet = new Set();
+        function regTot(r) {
+            const d = der(r);
+            const it = [['coord', 'Coord.', r.coord, ''], ['serv', 'Serventes', r.serv, ''], ['trator', 'Tratores', d.trTot, `M ${r.tm} · P ${r.tp}`], ['pessoa', 'Tratoristas', r.trat, ''], ['caminhao', 'Caminhões', d.caOp + d.caAp, `${d.caOp} op. · ${d.caAp} apoio`], ['volante', 'Motoristas', r.mot, ''], ['carro', 'Veículos', d.vei, `${r.vl} L · ${r.vm} M${r.van ? ' · ' + r.van + ' van' : ''}`], ['onibus', 'Ônibus', r.oni, ''], ['enc', 'Encarreg.', r.enc, ''], ['sup', 'Superv.', d.supT, '']];
+            return `<div class="rt">${it.map(([n, l, v, s]) => `<div class="rt-c${v ? '' : ' z'}"><div class="rt-l">${ic(n, 'x')}${l}</div><b>${fmt(v)}</b>${s ? `<small>${s}</small>` : ''}</div>`).join('')}</div>`;
+        }
+        function renderRegTot(rows) {
+            const regs = uniq(rows.map(r => r.reg));
+            const cell = (v, sub) => `<td class="${v ? '' : 'z'}">${fmt(v)}${sub ? `<small>${sub}</small>` : ''}</td>`;
+            const line = r => { const d = der(r); return cell(r.coord) + cell(r.serv) + cell(d.trTot, `M ${r.tm} · P ${r.tp}`) + cell(r.trat) + cell(d.caOp + d.caAp, `${d.caOp} op. · ${d.caAp} apoio`) + cell(r.mot) + cell(d.vei, `${r.vl} L · ${r.vm} M`) + cell(r.oni) + cell(r.enc) + cell(d.supT); };
+            const nC = rr => uniq(rr.map(r => r.rgl + '|' + r.cdc)).length;
+            let h = `<table class="rg-tbl"><thead><tr><th class="l">Total por região</th><th>CDCs</th><th>Equipes</th><th>Coord.</th><th>Serventes</th><th>Tratores</th><th>Tratoristas</th><th>Caminhões</th><th>Motoristas</th><th>Veículos</th><th>Ônibus</th><th>Encarreg.</th><th>Superv.</th></tr></thead><tbody>`;
+            regs.forEach(reg => { const rr = rows.filter(r => r.reg === reg); h += `<tr data-reg="${esc(reg)}" class="${fReg.value === reg ? 'sel' : ''}" tabindex="0"><td class="l rn">${esc(reg)}</td><td>${nC(rr)}</td><td>${rr.length}</td>${line(sum(rr))}</tr>`; });
+            h += `</tbody>${regs.length > 1 ? `<tfoot><tr><td class="l">Total</td><td>${nC(rows)}</td><td>${rows.length}</td>${line(sum(rows))}</tr></tfoot>` : ''}</table>`;
+            const w = $('#rg-eq'); w.innerHTML = rows.length ? h : ''; w.hidden = !rows.length;
+            w.querySelectorAll('tbody tr').forEach(tr => { const go = () => { fReg.value = fReg.value === tr.dataset.reg ? '' : tr.dataset.reg; cascade(); renderEq(); }; tr.onclick = go; tr.onkeydown = e => { if (e.key === 'Enter') go(); }; });
+        }
         function syncFilterUI() {
             [fReg, fRgl, fCon].forEach(s => s.classList.toggle('on', !!s.value));
             $('#b-clear').disabled = !(fReg.value || fRgl.value || fCon.value || fQ.value);
@@ -1239,7 +1485,6 @@
             const q = fQ.value.trim().toLowerCase();
             let rows = D.e.filter(r => (!fReg.value || r.reg === fReg.value) && (!fRgl.value || r.rgl === fRgl.value) && (!fCon.value || r.con === fCon.value));
             if (q) rows = rows.filter(r => (r.eq + ' ' + r.cod + ' ' + r.cdc + ' ' + r.cdcd).toLowerCase().includes(q));
-            ribbon($('#rib-eq'), sum(rows));
             const cdcs = new Map();
             rows.forEach(r => { const k = r.reg + '|' + r.rgl + '|' + r.cdc; if (!cdcs.has(k)) cdcs.set(k, []); cdcs.get(k).push(r); });
             $('#cnt').textContent = `${pl(cdcs.size, 'CDC', 'CDCs')} · ${pl(rows.length, 'equipe', 'equipes')}`;
@@ -1248,7 +1493,7 @@
             const regCount = {}; rows.forEach(r => regCount[r.reg] = (regCount[r.reg] || 0) + 1);
             for (const [k, ts] of cdcs) {
                 const f = ts[0];
-                if (f.reg !== lastReg) { html += `<h2 class="region">${esc(f.reg)} <em>${regCount[f.reg]} equipes</em></h2>`; lastReg = f.reg; }
+                if (f.reg !== lastReg) { const rr = rows.filter(r => r.reg === f.reg); html += `<h2 class="region">${esc(f.reg)} <em>${pl(uniq(rr.map(r => r.rgl + '|' + r.cdc)).length, 'CDC', 'CDCs')} · ${pl(regCount[f.reg], 'equipe', 'equipes')}</em></h2>${regTot(sum(rr))}`; lastReg = f.reg; }
                 const open = openSet.has(k) || (q && ts.length) ? ' open' : '';
                 html += `<details class="cdc" data-k="${esc(k)}"${open}><summary>
       <div class="cdc-id"><span class="chev" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M7 4l6 6-6 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -1308,6 +1553,31 @@
         }
 
 
+
+        /* ---------- Equipes de apoio ---------- */
+        const CATS = [['Gestão operacional', /^GESTAO OP/i], ['Oficina', /^OFICINA/i], ['SSMA', /SSMA/i], ['Qualidade', /^QUALIDADE/i], ['Projetos', /^P\d+\s*-/i], ['Gestão', /^GESTAO/i], ['Desenvolvimento', /DESENVOLVIMENTO|APOIO SUPLEMENTAR/i]];
+        const catOf = n => (CATS.find(([, re]) => re.test(n)) || ['Outras'])[0];
+        const CAT_ORDER = ['Gestão operacional', 'Gestão', 'Oficina', 'SSMA', 'Qualidade', 'Projetos', 'Desenvolvimento', 'Outras'];
+        const AP_COLS = [['Coord.', r => r.coord], ['Serventes', r => r.serv], ['Tratores', r => der(r).trTot], ['Tratoristas', r => r.trat], ['Caminhões', r => der(r).caOp + der(r).caAp], ['Motoristas', r => r.mot], ['Veículos', r => der(r).vei], ['Ônibus', r => r.oni], ['Encarreg.', r => r.enc], ['Superv.', r => der(r).supT]];
+        const apCells = r => AP_COLS.map(([, f]) => { const v = f(r); return `<td class="${v ? '' : 'z'}">${fmt(v)}</td>`; }).join('');
+        function renderAp() {
+            ribbon($('#rib-ap'), sum(D.ap));
+            $('#cnt-ap').textContent = pl(D.ap.length, 'equipe de apoio', 'equipes de apoio');
+            let h = '';
+            uniq(D.ap.map(r => r.reg)).forEach(reg => {
+                const rr = D.ap.filter(r => r.reg === reg);
+                h += `<h2 class="region">${esc(reg)} <em>${pl(rr.length, 'equipe', 'equipes')}</em></h2><div class="tbl-wrap ap-wrap"><table class="ap-tbl"><thead><tr><th class="l">Equipe</th><th class="l">Regional</th>${AP_COLS.map(([l]) => `<th class="subh">${l}</th>`).join('')}</tr></thead><tbody>`;
+                CAT_ORDER.forEach(cat => {
+                    const cc = rr.filter(r => catOf(r.eq) === cat).sort((a, b) => a.rgl.localeCompare(b.rgl) || a.eq.localeCompare(b.eq));
+                    if (!cc.length) return;
+                    h += `<tr class="reg"><td colspan="${AP_COLS.length + 2}">${cat} <span class="ap-n">${cc.length}</span></td></tr>`;
+                    h += cc.map(r => `<tr><td class="l"><span class="con">${esc(r.eq)}</span></td><td class="l" style="color:var(--muted)">${r.rgl === 'Sem regional' ? '—' : esc(r.rgl)}</td>${apCells(r)}</tr>`).join('');
+                });
+                h += `</tbody><tfoot><tr><td class="l">Total ${esc(reg)}</td><td></td>${apCells(sum(rr))}</tr></tfoot></table></div>`;
+            });
+            $('#ap').innerHTML = h || '<p class="empty">Nenhuma equipe de apoio com estrutura operacional.</p>';
+        }
+
         /* ---------- Resumo ---------- */
         function rv(n, label, val, sub) {
             return `<div class="rv${val ? '' : ' z'}"><div class="lb">${ic(n, 'x')}${label}</div><b>${fmt(val)}</b>${sub ? `<small>${sub}</small>` : ''}</div>`;
@@ -1346,16 +1616,25 @@
                 });
                 h += '</div></section>';
             });
+            if (D.ap.length) {
+                const tot = sum(D.ap);
+                h += `<section class="rs-reg"><div class="rs-head"><h2>Equipes de apoio</h2><p>${pl(D.ap.length, 'equipe', 'equipes')} fora dos contratos · oficinas, SSMA, gestão, qualidade e projetos</p></div><div class="rs-grid">`;
+                uniq(D.ap.map(r => r.reg)).forEach(reg => {
+                    const rr = D.ap.filter(r => r.reg === reg);
+                    h += resCard(reg, pl(rr.length, 'equipe', 'equipes'), sum(rr), true);
+                });
+                h += '</div></section>';
+            }
             $('#res').innerHTML = h;
         }
 
         /* ---------- tabs ---------- */
         function show(which) {
-            ['eq', 'con', 'res'].forEach(k => { $('#t-' + k).setAttribute('aria-selected', which === k); $('#p-' + k).hidden = which !== k; });
+            ['eq', 'con', 'ap', 'res'].forEach(k => { $('#t-' + k).setAttribute('aria-selected', which === k); $('#p-' + k).hidden = which !== k; });
         }
-        $('#t-eq').onclick = () => show('eq'); $('#t-con').onclick = () => show('con'); $('#t-res').onclick = () => show('res');
+        $('#t-eq').onclick = () => show('eq'); $('#t-con').onclick = () => show('con'); $('#t-res').onclick = () => show('res'); $('#t-ap').onclick = () => show('ap');
 
-        cascade(); renderEq(); renderCon(); renderRes();
+        cascade(); renderEq(); renderCon(); renderAp(); renderRes();
     </script>
 </body>
 
