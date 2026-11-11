@@ -1399,8 +1399,8 @@
         /* ---------- Por equipe ---------- */
         const uniq = (arr) => [...new Set(arr)];
         /* remove clientes excluídos da visão (Eucatex e CMPC) e recalcula a aba por contrato */
-        const EXCLUIR = /EUCATEX|CMPC/i;
-        const EXCLUIR_REGIOES = ['NORTE'];
+        const EXCLUIR = /(?!)/; // nenhuma empresa excluída (para excluir, use por ex. /EUCATEX|CMPC/i)
+        const EXCLUIR_REGIOES = []; // nenhuma região excluída (para excluir, use por ex. ['NORTE'])
         D.e = D.e.filter(r => !EXCLUIR.test(r.cdcd) && !EXCLUIR.test(r.eq) && !EXCLUIR_REGIOES.includes(r.reg));
         /* separa equipes de apoio: nome que não começa com C + número */
         const EH_OPERACAO = n => /^\s*C\d+/i.test(n);
