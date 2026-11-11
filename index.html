@@ -153,7 +153,7 @@
 
         .ribbon {
             display: grid;
-            grid-template-columns: repeat(8, minmax(0, 1fr));
+            grid-template-columns: repeat(6, minmax(0, 1fr));
             gap: 0;
             margin: 24px 0 0;
             border: 1px solid var(--line);
@@ -528,7 +528,7 @@
 
         .strip {
             display: grid;
-            grid-template-columns: repeat(8, minmax(0, 1fr));
+            grid-template-columns: repeat(6, minmax(0, 1fr));
             gap: 6px
         }
 
@@ -721,6 +721,15 @@
 
         .m:nth-child(odd):not(.wide) {
             border-right: 1px solid var(--line)
+        }
+
+        .m:last-child {
+            border-bottom: 0
+        }
+
+        .m:last-child:nth-child(odd) {
+            grid-column: span 2;
+            border-right: 0
         }
 
         .empty {
@@ -982,7 +991,7 @@
 
         .rc-g {
             display: grid;
-            grid-template-columns: repeat(5, minmax(0, 1fr))
+            grid-template-columns: repeat(4, minmax(0, 1fr))
         }
 
         .rv {
@@ -992,12 +1001,16 @@
             min-width: 0
         }
 
-        .rv:nth-child(5n) {
+        .rv:nth-child(4n) {
             border-right: 0
         }
 
-        .rv:nth-last-child(-n+5) {
+        .rv:nth-last-child(-n+4) {
             border-bottom: 0
+        }
+
+        .rv:last-child {
+            border-right: 0
         }
 
         .rv .lb {
@@ -1068,7 +1081,7 @@
 
         .rt {
             display: grid;
-            grid-template-columns: repeat(10, minmax(0, 1fr));
+            grid-template-columns: repeat(8, minmax(0, 1fr));
             background: var(--brand-soft);
             border-radius: 12px;
             margin: 0 0 14px;
@@ -1128,14 +1141,14 @@
 
         @media (max-width:1000px) {
             .rt {
-                grid-template-columns: repeat(5, minmax(0, 1fr))
+                grid-template-columns: repeat(4, minmax(0, 1fr))
             }
 
-            .rt-c:nth-child(5n+1) {
+            .rt-c:nth-child(4n+1) {
                 border-left: 0
             }
 
-            .rt-c:nth-child(n+6) {
+            .rt-c:nth-child(n+5) {
                 border-top: 1px solid rgba(9, 85, 80, .12)
             }
         }
@@ -1361,7 +1374,7 @@
         const der = r => ({
             trTot: r.tl + r.tm + r.tp, caOp: r.ct + r.ctr, caAp: r.cp, vei: r.vl + r.vm + r.van, supT: r.sup + r.supo
         });
-        const opTotal = r => { const d = der(r); return r.coord + r.serv + d.trTot + r.te + r.esc + r.trat + d.caOp + d.caAp + r.mot + d.vei + r.oni + r.enc + d.supT; };
+        const opTotal = r => { const d = der(r); return r.serv + d.trTot + r.te + r.esc + r.trat + d.caOp + d.caAp + r.mot + d.vei + r.oni + r.enc; };
         const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
         const isApoio = n => false;
         const IC = {
@@ -1384,14 +1397,12 @@
         function ribbon(el, r) {
             const d = der(r);
             const items = [
-                [1, 'coord', r.coord, 'Coordenadores', ''],
                 [2, 'serv', r.serv, 'Serventes', ''],
                 [3, 'trator', d.trTot, 'Tratores', `L ${r.tl} · M ${r.tm} · P ${r.tp}<br>${r.trat} tratoristas`],
                 [4, 'caminhao', d.caOp + d.caAp, 'Caminhões', `${d.caOp} operação · ${d.caAp} apoio<br>${r.mot} motoristas`],
                 [5, 'carro', d.vei, 'Veículos nas frentes', `${r.vl} leves · ${r.vm} médios${r.van ? ` · ${r.van} van` : ''}`],
                 [6, 'onibus', r.oni, 'Ônibus', ''],
-                [7, 'enc', r.enc, 'Encarregados', ''],
-                [8, 'sup', d.supT, 'Supervisores', `${r.sup} operacionais · ${r.supo} outras áreas`]
+                [7, 'enc', r.enc, 'Encarregados', '']
             ];
             el.innerHTML = items.map(([i, icn, v, l, s]) => `<div class="tile" style="${C(i)}"><div class="ib">${ic(icn)}</div><b>${fmt(v)}</b><span>${l}</span>${s ? `<small>${s}</small>` : ''}</div>`).join('');
         }
@@ -1441,7 +1452,6 @@
             return `<article class="team${isApoio(t.eq) ? ' apoio' : ''}">
     <div class="team-h"><div><h3>${esc(t.eq)}</h3><div class="code">Equipe ${esc(t.cod)}</div></div>${isApoio(t.eq) ? `<span class="tag">${ic('chave', 'ti')}Apoio</span>` : ''}</div>
     <div class="mini">
-      ${mini(1, 'coord', 'Coordenadores', t.coord)}
       ${mini(2, 'serv', 'Serventes', t.serv)}
       ${mini(3, 'trator', 'Tratores', d.trTot, `Leves ${t.tl} · Médios ${t.tm} · Pesados ${t.tp}${extraTr ? '<br>' + extraTr : ''}`)}
       ${mini(3, 'pessoa', 'Tratoristas', t.trat)}
@@ -1451,18 +1461,17 @@
       ${mini(5, 'carro', 'Veículos nas frentes', d.vei, `Leves ${t.vl} · Médios ${t.vm}${t.van ? ' · Van ' + t.van : ''}`)}
       ${mini(6, 'onibus', 'Ônibus', t.oni)}
       ${mini(7, 'enc', 'Encarregados', t.enc)}
-      ${mini(8, 'sup', 'Supervisores', d.supT, `Operacionais ${t.sup} · Outras áreas ${t.supo}`, true)}
     </div></article>`;
         }
         function strip(r) {
             const d = der(r);
-            const it = [[1, r.coord, 'Coord.', 'coord'], [2, r.serv, 'Serventes', 'serv'], [3, d.trTot, 'Tratores', 'trator'], [4, d.caOp + d.caAp, 'Caminhões', 'caminhao'], [5, d.vei, 'Veículos', 'carro'], [6, r.oni, 'Ônibus', 'onibus'], [7, r.enc, 'Encarreg.', 'enc'], [8, d.supT, 'Superv.', 'sup']];
+            const it = [[2, r.serv, 'Serventes', 'serv'], [3, d.trTot, 'Tratores', 'trator'], [4, d.caOp + d.caAp, 'Caminhões', 'caminhao'], [5, d.vei, 'Veículos', 'carro'], [6, r.oni, 'Ônibus', 'onibus'], [7, r.enc, 'Encarreg.', 'enc']];
             return `<div class="strip">${it.map(([i, v, l, n]) => `<div class="pill${v ? '' : ' z'}" style="${C(i)}">${ic(n, 'pi')}<div><b>${fmt(v)}</b><span>${l}</span></div></div>`).join('')}</div>`;
         }
         const openSet = new Set();
         function regTot(r) {
             const d = der(r);
-            const it = [['coord', 'Coord.', r.coord, ''], ['serv', 'Serventes', r.serv, ''], ['trator', 'Tratores', d.trTot, `M ${r.tm} · P ${r.tp}`], ['pessoa', 'Tratoristas', r.trat, ''], ['caminhao', 'Caminhões', d.caOp + d.caAp, `${d.caOp} op. · ${d.caAp} apoio`], ['volante', 'Motoristas', r.mot, ''], ['carro', 'Veículos', d.vei, `${r.vl} L · ${r.vm} M${r.van ? ' · ' + r.van + ' van' : ''}`], ['onibus', 'Ônibus', r.oni, ''], ['enc', 'Encarreg.', r.enc, ''], ['sup', 'Superv.', d.supT, '']];
+            const it = [['serv', 'Serventes', r.serv, ''], ['trator', 'Tratores', d.trTot, `M ${r.tm} · P ${r.tp}`], ['pessoa', 'Tratoristas', r.trat, ''], ['caminhao', 'Caminhões', d.caOp + d.caAp, `${d.caOp} op. · ${d.caAp} apoio`], ['volante', 'Motoristas', r.mot, ''], ['carro', 'Veículos', d.vei, `${r.vl} L · ${r.vm} M${r.van ? ' · ' + r.van + ' van' : ''}`], ['onibus', 'Ônibus', r.oni, ''], ['enc', 'Encarreg.', r.enc, '']];
             return `<div class="rt">${it.map(([n, l, v, s]) => `<div class="rt-c${v ? '' : ' z'}"><div class="rt-l">${ic(n, 'x')}${l}</div><b>${fmt(v)}</b>${s ? `<small>${s}</small>` : ''}</div>`).join('')}</div>`;
         }
         function renderRegTot(rows) {
@@ -1513,14 +1522,12 @@
 
         /* ---------- Por contrato ---------- */
         const COLS = [
-            ['Coord.', r => r.coord, 'Coordenadores', 1, '', 1],
             ['Serventes', r => r.serv, 'Serventes', 1, '', 2],
             ['Leves', r => r.tl, 'Tratores', 5, '', 3], ['Médios', r => r.tm, 0, 0, '', 3], ['Pesados', r => r.tp, 0, 0, '', 3], ['Total', r => der(r).trTot, null, 0, 'tot', 3], ['Tratoristas', r => r.trat, 0, 0, '', 3],
             ['Operação', r => der(r).caOp, 'Caminhões', 3, '', 4], ['Apoio', r => r.cp, 0, 0, '', 4], ['Motoristas', r => r.mot, 0, 0, '', 4],
             ['Leves', r => r.vl, 'Veículos nas frentes', 4, '', 5], ['Médios', r => r.vm, 0, 0, '', 5], ['Vans', r => r.van, 0, 0, '', 5], ['Total', r => der(r).vei, null, 0, 'tot', 5],
             ['Ônibus', r => r.oni, 'Ônibus', 1, '', 6],
             ['Encarreg.', r => r.enc, 'Encarregados', 1, '', 7],
-            ['Operac.', r => r.sup, 'Supervisores', 3, '', 8], ['Outras áreas', r => r.supo, 0, 0, '', 8], ['Total', r => der(r).supT, null, 0, 'tot', 8],
         ];
         function cells(r) {
             let start = true;
@@ -1558,7 +1565,7 @@
         const CATS = [['Gestão operacional', /^GESTAO OP/i], ['Oficina', /^OFICINA/i], ['SSMA', /SSMA/i], ['Qualidade', /^QUALIDADE/i], ['Projetos', /^P\d+\s*-/i], ['Gestão', /^GESTAO/i], ['Desenvolvimento', /DESENVOLVIMENTO|APOIO SUPLEMENTAR/i]];
         const catOf = n => (CATS.find(([, re]) => re.test(n)) || ['Outras'])[0];
         const CAT_ORDER = ['Gestão operacional', 'Gestão', 'Oficina', 'SSMA', 'Qualidade', 'Projetos', 'Desenvolvimento', 'Outras'];
-        const AP_COLS = [['Coord.', r => r.coord], ['Serventes', r => r.serv], ['Tratores', r => der(r).trTot], ['Tratoristas', r => r.trat], ['Caminhões', r => der(r).caOp + der(r).caAp], ['Motoristas', r => r.mot], ['Veículos', r => der(r).vei], ['Ônibus', r => r.oni], ['Encarreg.', r => r.enc], ['Superv.', r => der(r).supT]];
+        const AP_COLS = [['Serventes', r => r.serv], ['Tratores', r => der(r).trTot], ['Tratoristas', r => r.trat], ['Caminhões', r => der(r).caOp + der(r).caAp], ['Motoristas', r => r.mot], ['Veículos', r => der(r).vei], ['Ônibus', r => r.oni], ['Encarreg.', r => r.enc]];
         const apCells = r => AP_COLS.map(([, f]) => { const v = f(r); return `<td class="${v ? '' : 'z'}">${fmt(v)}</td>`; }).join('');
         function renderAp() {
             ribbon($('#rib-ap'), sum(D.ap));
@@ -1585,7 +1592,6 @@
         function resCard(title, meta, r, semc) {
             const d = der(r);
             return `<article class="rc${semc ? ' semc' : ''}"><div class="rc-h"><h3>${esc(title)}</h3><span>${meta}</span></div><div class="rc-g">
-    ${rv('coord', 'Coord.', r.coord)}
     ${rv('serv', 'Serventes', r.serv)}
     ${rv('trator', 'Tratores', d.trTot, `M ${r.tm} · P ${r.tp}${r.tl ? ' · L ' + r.tl : ''}`)}
     ${rv('pessoa', 'Tratoristas', r.trat)}
@@ -1594,7 +1600,6 @@
     ${rv('carro', 'Veículos', d.vei, `${r.vl} L · ${r.vm} M${r.van ? ' · ' + r.van + ' van' : ''}`)}
     ${rv('onibus', 'Ônibus', r.oni)}
     ${rv('enc', 'Encarreg.', r.enc)}
-    ${rv('sup', 'Superv.', d.supT, `${r.sup} op. · ${r.supo} outras`)}
   </div></article>`;
         }
         function renderRes() {
